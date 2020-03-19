@@ -1,9 +1,9 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "projects",
+  "newProjectRoot": "package",
   "projects": {
-    "ng-codemirror": {
+    "demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -11,24 +11,24 @@
         }
       },
       "root": "",
-      "sourceRoot": "src",
+      "sourceRoot": "demo",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ng-codemirror",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "outputPath": "dist/demo",
+            "index": "demo/index.html",
+            "main": "demo/main.ts",
+            "polyfills": "demo/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": false,
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "demo/favicon.ico",
+              "demo/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "demo/styles.scss"
             ],
             "scripts": []
           },
@@ -36,8 +36,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "demo/environments/environment.ts",
+                  "with": "demo/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -67,33 +67,33 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ng-codemirror:build"
+            "browserTarget": "demo:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ng-codemirror:build:production"
+              "browserTarget": "demo:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng-codemirror:build"
+            "browserTarget": "demo:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "main": "demo/test.ts",
+            "polyfills": "demo/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "demo/favicon.ico",
+              "demo/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "demo/styles.scss"
             ],
             "scripts": []
           }
@@ -115,15 +115,50 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ng-codemirror:serve"
+            "devServerTarget": "demo:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ng-codemirror:serve:production"
+              "devServerTarget": "demo:serve:production"
             }
           }
         }
       }
+    },
+    "ng-codemirror": {
+      "projectType": "library",
+      "root": "package",
+      "sourceRoot": "package/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "package/tsconfig.lib.json",
+            "project": "package/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "package/src/test.ts",
+            "tsConfig": "package/tsconfig.spec.json",
+            "karmaConfig": "package/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "package/tsconfig.lib.json",
+              "package/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
-  "defaultProject": "ng-codemirror"
+  "defaultProject": "demo"
 }

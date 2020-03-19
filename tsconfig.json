@@ -17,7 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ng-codemirror": [
+        "dist/ng-codemirror"
+      ],
+      "ng-codemirror/*": [
+        "dist/ng-codemirror/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

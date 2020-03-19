@@ -1,0 +1,9 @@
+{
+  "name": "ng-codemirror",
+  "version": "1.0.0",
+  "peerDependencies": {
+    "@angular/common": "^8.2.14",
+    "@angular/core": "^8.2.14",
+    "codemirror": "^5.50.0"
+  }
+}
