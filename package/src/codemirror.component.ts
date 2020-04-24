@@ -12,127 +12,164 @@ import {
   EventEmitter,
   OnDestroy,
   AfterViewInit,
-  Renderer2
-} from '@angular/core';
-import * as codemirror from 'codemirror';
-import { take, debounceTime, filter } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { HostBinding } from '@angular/core';
+  Renderer2,
+  KeyValueDiffer,
+  KeyValueDiffers,
+} from "@angular/core";
+import * as codemirror from "codemirror";
+import { take, filter } from "rxjs/operators";
+import { HostBinding } from "@angular/core";
 
 @Component({
-  selector: 'ng-code-mirror, [ngCodeMirror]',
-  template: `
-      <textarea #textAreaRef></textarea>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  selector: "ng-code-mirror, [ngCodeMirror]",
+  template: `<textarea #textAreaRef></textarea>`,
+  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CodeMirrorComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class CodeMirrorComponent
+  implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() code: string;
 
-  @Input() mode: string;
+  @Input() flexibleMaxHeight = 0;
 
-  @Input() readOnly = false;
-
-  @Input() autoFocus = false;
-
-  @Input() maxHeight = 350;
-
-  @Input() fixedHeight = true;
+  @Input() options: codemirror.EditorConfiguration;
 
   @Output() codeChange: EventEmitter<string> = new EventEmitter();
 
   @Output() focusChange: EventEmitter<boolean> = new EventEmitter();
 
-  @ViewChild('textAreaRef', { read: ElementRef, static: true }) textAreaRef: ElementRef;
+  @ViewChild("textAreaRef", { read: ElementRef, static: true })
+  textAreaRef: ElementRef;
 
-  @HostBinding('class.ng-codemirror') codemirrorClassName = true;
-
-  codeChange$: Subject<string> = new Subject();
+  @HostBinding("class.ng-codemirror") codemirrorClassName = true;
 
   public editor: codemirror.EditorFromTextArea;
 
-  constructor(private elementRef: ElementRef, private ngZone: NgZone, private renderer: Renderer2) {}
+  private _differ: KeyValueDiffer<string, any>;
+
+  constructor(
+    private elementRef: ElementRef,
+    private ngZone: NgZone,
+    private renderer: Renderer2,
+    private _differs: KeyValueDiffers,
+    private _ngZone: NgZone
+  ) {}
 
   ngOnInit() {
-      this.codeChange$.pipe(debounceTime(100)).subscribe(() => {
-          this.ngZone.run(() => {
-              const value = this.editor.getValue();
-              this.codeChange.emit(value);
-          });
-      });
+    if (!this._differ && this.options) {
+      this._differ = this._differs.find(this.options).create();
+    }
   }
 
   ngAfterViewInit() {
-      if (this.elementRef.nativeElement.offsetWidth > 0) {
+    if (this.elementRef.nativeElement.offsetWidth > 0) {
+      this.initCodemirror();
+      this.renderer.setStyle(
+        this.elementRef.nativeElement,
+        "maxHeight",
+        `${this.flexibleMaxHeight}px`
+      );
+    } else {
+      this.ngZone.onStable
+        .asObservable()
+        .pipe(
+          filter(() => {
+            return this.elementRef.nativeElement.offsetWidth > 0;
+          }),
+          take(1)
+        )
+        .subscribe(() => {
           this.initCodemirror();
-          this.renderer.setStyle(this.elementRef.nativeElement, 'maxHeight', `${this.maxHeight}px`);
-      } else {
-          this.ngZone.onStable
-              .asObservable()
-              .pipe(
-                  filter(() => {
-                      return this.elementRef.nativeElement.offsetWidth > 0;
-                  }),
-                  take(1)
-              )
-              .subscribe(() => {
-                  this.initCodemirror();
-              });
-      }
+        });
+    }
   }
 
   ngOnChanges(simpleChanges: SimpleChanges) {
-      const modeChange = simpleChanges.mode;
-      if (modeChange && !modeChange.firstChange) {
-          this.editor.setOption('mode', modeChange.currentValue);
+    const optionsChange = simpleChanges.options;
+    if (optionsChange && !optionsChange.firstChange) {
+      const changes = this._differ.diff(this.options);
+      if (changes) {
+        changes.forEachChangedItem((option) =>
+          this.setOptionIfChanged(option.key, option.currentValue)
+        );
+        changes.forEachAddedItem((option) =>
+          this.setOptionIfChanged(option.key, option.currentValue)
+        );
+        changes.forEachRemovedItem((option) =>
+          this.setOptionIfChanged(option.key, option.currentValue)
+        );
       }
-  }
-
-  ngOnDestroy() {
-      this.codeChange$.complete();
+    }
   }
 
   initCodemirror() {
-      this.ngZone.runOutsideAngular(() => {
-          this.editor = codemirror.fromTextArea(this.textAreaRef.nativeElement, {
-              mode: this.mode,
-              lineNumbers: true,
-              readOnly: this.readOnly ? 'nocursor' : false,
-              autofocus: this.autoFocus
-          });
-          this.editor.setValue(this.code ? this.code : '');
-          this.editor.on('focus', () => this.ngZone.run(() => this.focusChange.emit(true)));
-          this.editor.on('blur', () => this.ngZone.run(() => this.focusChange.emit(false)));
-          this.editor.on('change', () => {
-              this.codeChange$.next(null);
-          });
-          if (!this.fixedHeight) {
-              this.autoMaxHeight();
-          }
-      });
-  }
-
-  autoMaxHeight() {
-      const code = (this.elementRef.nativeElement as HTMLElement).querySelector('.CodeMirror-code') as HTMLElement;
-      this.update(code);
-      const codemirrorContentObserver = new MutationObserver(() => {
-          this.update(code);
-      });
-      codemirrorContentObserver.observe(code, {
-          childList: true
-      });
-  }
-
-  update(code: HTMLElement) {
-      if (code.offsetHeight >= this.maxHeight) {
-          const wrapHeight = (this.elementRef.nativeElement as HTMLElement).querySelector(
-              '.CodeMirror'
-          ) as HTMLElement;
-          if (wrapHeight.offsetHeight >= this.maxHeight) {
-              this.editor.setSize('100%', `${this.maxHeight}px`);
-          }
-      } else {
-          this.editor.setSize('100%', `auto`);
+    this.ngZone.runOutsideAngular(() => {
+      if (!this.options) {
+        throw new Error("options is required");
       }
+      this.editor = codemirror.fromTextArea(
+        this.textAreaRef.nativeElement,
+        this.options
+      );
+      this.editor.setValue(this.code ? this.code : "");
+      this.editor.on("focus", () =>
+        this.ngZone.run(() => this.focusChange.emit(true))
+      );
+      this.editor.on("blur", () =>
+        this.ngZone.run(() => this.focusChange.emit(false))
+      );
+      this.editor.on(
+        "change",
+        (cm: codemirror.Editor, change: codemirror.EditorChangeLinkedList) => {
+          if (change.origin !== "setValue") {
+            this.code = cm.getValue();
+            this.codeChange.emit(this.code);
+          }
+        }
+      );
+      if (this.flexibleMaxHeight > 0) {
+        this.initMaxHeight();
+      }
+    });
   }
+
+  private initMaxHeight() {
+    const codeWrapElement = (this.elementRef
+      .nativeElement as HTMLElement).querySelector(
+      ".CodeMirror-code"
+    ) as HTMLElement;
+    this.applyEditorHeight(codeWrapElement);
+    const codemirrorContentObserver = new MutationObserver(() => {
+      this.applyEditorHeight(codeWrapElement);
+    });
+    codemirrorContentObserver.observe(codeWrapElement, {
+      childList: true,
+    });
+  }
+
+  private applyEditorHeight(code: HTMLElement) {
+    if (code.offsetHeight >= this.flexibleMaxHeight) {
+      const wrapHeight = (this.elementRef
+        .nativeElement as HTMLElement).querySelector(
+        ".CodeMirror"
+      ) as HTMLElement;
+      if (wrapHeight.offsetHeight >= this.flexibleMaxHeight) {
+        this.editor.setSize("100%", `${this.flexibleMaxHeight}px`);
+      }
+    } else {
+      this.editor.setSize("100%", `auto`);
+    }
+  }
+
+  setOptionIfChanged(optionName: string, newValue: any) {
+    if (!this.editor) {
+      return;
+    }
+
+    // cast to any to handle strictly typed option names
+    // could possibly import settings strings available in the future
+    this.editor.setOption(optionName as any, newValue);
+  }
+
+  ngOnDestroy() {}
 }

@@ -1,4 +1,9 @@
-<div>
-  <ng-code-mirror class="ng-codemirror"></ng-code-mirror>
+<div class="demo-codemirror">
+  <div class="global-toolbar">
+    <nz-select class="select-mode" nzShowSearch [(ngModel)]="mode" (ngModelChange)="modeChange($event)">
+      <nz-option [nzValue]="item.value" [nzLabel]="item.name" *ngFor="let item of modeOptions"></nz-option>
+    </nz-select>
+  </div>
+  <ng-code-mirror [options]="options" [code]="code"></ng-code-mirror>
 </div>
 <router-outlet></router-outlet>

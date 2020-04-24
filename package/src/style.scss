@@ -1,4 +1,6 @@
 .ng-codemirror {
-  border: 1px solid #ccc;
-  display: block;
+  .CodeMirror {
+    border: 1px solid #ccc;
+    border-radius: 1px;
+  }
 }

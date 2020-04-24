@@ -28,7 +28,8 @@
               "demo/assets"
             ],
             "styles": [
-              "demo/styles.scss"
+              "demo/styles.scss",
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"
             ],
             "scripts": []
           },
