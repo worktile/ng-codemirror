@@ -30,7 +30,7 @@ export class CodeMirrorComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() code: string;
 
-  @Input() flexibleMaxHeight = 0;
+  @Input() autoMaxHeight = 0;
 
   @Input() options: codemirror.EditorConfiguration;
 
@@ -67,7 +67,7 @@ export class CodeMirrorComponent
       this.renderer.setStyle(
         this.elementRef.nativeElement,
         "maxHeight",
-        `${this.flexibleMaxHeight}px`
+        `${this.autoMaxHeight}px`
       );
     } else {
       this.ngZone.onStable
@@ -127,7 +127,7 @@ export class CodeMirrorComponent
           }
         }
       );
-      if (this.flexibleMaxHeight > 0) {
+      if (this.autoMaxHeight > 0) {
         this.initMaxHeight();
       }
     });
@@ -148,13 +148,13 @@ export class CodeMirrorComponent
   }
 
   private applyEditorHeight(code: HTMLElement) {
-    if (code.offsetHeight >= this.flexibleMaxHeight) {
+    if (code.offsetHeight >= this.autoMaxHeight) {
       const wrapHeight = (this.elementRef
         .nativeElement as HTMLElement).querySelector(
         ".CodeMirror"
       ) as HTMLElement;
-      if (wrapHeight.offsetHeight >= this.flexibleMaxHeight) {
-        this.editor.setSize("100%", `${this.flexibleMaxHeight}px`);
+      if (wrapHeight.offsetHeight >= this.autoMaxHeight) {
+        this.editor.setSize("100%", `${this.autoMaxHeight}px`);
       }
     } else {
       this.editor.setSize("100%", `auto`);
