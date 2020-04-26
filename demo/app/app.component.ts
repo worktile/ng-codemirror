@@ -14,7 +14,7 @@ export class AppComponent {
     mode: 'javascript',
     autofocus: true,
     lineWiseCopyCut: true,
-    // cursorBlinkRate: -1 // hide cursor
+    cursorBlinkRate: 500 // hide cursor
   };
   code = initializeCode;
   mode = DEFAULT_LANGUAGE.value;
@@ -23,6 +23,14 @@ export class AppComponent {
   modeChange(mode: CodeLanguages) {
     Object.assign({}, this.options, { mode: mode.toString() });
     this.options = {...this.options, mode};
+  }
+
+  toggleReadonly(checked) {
+    if (checked) {
+      this.options = { ...this.options, readOnly: true, cursorBlinkRate: -1 };
+    } else {
+      this.options = { ...this.options, readOnly: false, cursorBlinkRate: 500 };
+    }
   }
 }
 

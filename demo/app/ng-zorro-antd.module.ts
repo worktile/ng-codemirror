@@ -14,7 +14,7 @@ import { NgModule } from '@angular/core';
 // import { NzCardModule } from 'ng-zorro-antd/card';
 // import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 // import { NzCascaderModule } from 'ng-zorro-antd/cascader';
-// import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 // import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 // import { NzCommentModule } from 'ng-zorro-antd/comment';
 // import { warnDeprecation } from 'ng-zorro-antd/core/logger';
@@ -80,7 +80,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     // NzCardModule,
     // NzCarouselModule,
     // NzCascaderModule,
-    // NzCheckboxModule,
+    NzCheckboxModule,
     // NzCollapseModule,
     // NzCommentModule,
     // NzDatePickerModule,
