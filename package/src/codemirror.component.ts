@@ -115,9 +115,10 @@ export class CodeMirrorComponent
       this.editor.on("focus", () =>
         this.ngZone.run(() => this.focusChange.emit(true))
       );
-      this.editor.on("blur", () =>
-        this.ngZone.run(() => this.focusChange.emit(false))
-      );
+      this.editor.on("blur", () => {
+        this.ngZone.run(() => this.focusChange.emit(false));
+        this.editor.setCursor(0, null, { scroll: false });
+      });
       this.editor.on(
         "change",
         (cm: codemirror.Editor, change: codemirror.EditorChangeLinkedList) => {
