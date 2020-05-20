@@ -3,4 +3,5 @@
     border: 1px solid #ccc;
     border-radius: 1px;
   }
+  .CodeMirror-focused .CodeMirror-selected { background: rgba($color: #348fe4, $alpha: 0.3); }
 }
