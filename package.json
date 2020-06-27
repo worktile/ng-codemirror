@@ -1,13 +1,22 @@
 {
   "name": "ng-codemirror-demo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build ng-codemirror",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "patch:ng-codemirror": "cd package && npm version patch && cd ../ && npm run build && cd dist/ng-codemirror && npm publish --access public",
+    "minor:slate": "cd package && npm version minor && cd ../ && npm run build && cd dist/ng-codemirror && npm publish --access public",
+    "major:slate": "cd package && npm version major && cd ../ && npm run build && cd dist/ng-codemirror && npm publish --access public",
+    "release:patch": "git add . && standard-version -a --release-as patch",
+    "release:minor": "git add . && standard-version -a --release-as minor",
+    "release:major": "git add . && standard-version -a --release-as major",
+    "patch": "npm run patch:ng-codemirror && npm run release:patch",
+    "minor": "npm run minor:ng-codemirror && npm run release:minor",
+    "major": "npm run patch:major && npm run release:major"
   },
   "private": true,
   "dependencies": {
@@ -50,6 +59,7 @@
     "ts-node": "~7.0.0",
     "tsickle": "^0.37.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.5.3"
+    "typescript": "~3.5.3",
+    "standard-version": "^7.0.1"
   }
 }

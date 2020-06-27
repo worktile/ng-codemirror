@@ -1,9 +1,11 @@
-# NgCodeMirror
+# Angular - Codemirror component
+codemirror component for Angular（8.*）
 
-# Feature
-1. Copy text in readOnly 'nocursor' mode
-2. init codemirror fater nativeElement has been attached
-ensure nativeElemnt's width has value , in addition to codemirror init fail（codemirror need a real element width）
-3. support maxHeight propertity
-when code block's height less than maxHeight, keep code block's real height
-when code block's height more than maxHeight, add scroll bar fixed maxHeight
+**Demo** : 
+
+# New Feature
+-   copy text in readOnly 'nocursor' mode
+
+-   ensure init codemirror after nativeElement has been attached （codemirror need a real element width）
+
+-   support maxHeight propertity
