@@ -30,7 +30,7 @@ In your `NgModule`:
 
 ```ts
 import { NgModule } from '@angular/core';
-import { CodemirrorModule } from '@ctrl/ngx-codemirror';
+import { CodemirrorModule } from 'ng-codemirror';
 
   // add to imports:
   imports: [
