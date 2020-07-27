@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build ng-codemirror",
+    "build": "ng build ng-codemirror && cpx \"./package/**/**/*.scss\" dist/ng-codemirror",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -60,6 +60,7 @@
     "tsickle": "^0.37.0",
     "tslint": "~5.15.0",
     "typescript": "~3.5.3",
-    "standard-version": ">=8.0.1"
+    "standard-version": ">=8.0.1",
+    "cpx": "^1.5.0"
   }
 }

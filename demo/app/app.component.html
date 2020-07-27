@@ -5,6 +5,6 @@
     </nz-select>
     <label class="ml-4" nz-checkbox [(ngModel)]="options.readOnly" (ngModelChange)="toggleReadonly($event)">readonly</label>
   </div>
-  <ng-code-mirror [options]="options" [code]="code" [autoMaxHeight]="300"></ng-code-mirror>
+  <ng-code-mirror [options]="options" [code]="code"></ng-code-mirror>
 </div>
 <router-outlet></router-outlet>

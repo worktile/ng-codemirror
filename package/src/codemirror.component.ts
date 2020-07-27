@@ -64,11 +64,13 @@ export class CodeMirrorComponent
   ngAfterViewInit() {
     if (this.elementRef.nativeElement.offsetWidth > 0) {
       this.initCodemirror();
-      this.renderer.setStyle(
-        this.elementRef.nativeElement,
-        "maxHeight",
-        `${this.autoMaxHeight}px`
-      );
+      if (this.autoMaxHeight > 0) {
+        this.renderer.setStyle(
+          this.elementRef.nativeElement,
+          "maxHeight",
+          `${this.autoMaxHeight}px`
+        );
+      }
     } else {
       this.ngZone.onStable
         .asObservable()
