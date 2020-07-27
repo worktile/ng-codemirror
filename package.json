@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build ng-codemirror && cpx \"./package/**/**/*.scss\" dist/ng-codemirror",
+    "build": "ng build ng-codemirror && cpx \"./package/src/*.scss\" dist/ng-codemirror/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
