@@ -57,9 +57,9 @@ Import the scss file
 Use The Component
 
 ```html
-<ng-code-mirror
+<ng-codemirror
   [options]="options"
   [code]="code"
   [autoMaxHeight]="300"
-></ng-code-mirror>
+></ng-codemirror>
 ```

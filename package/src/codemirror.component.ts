@@ -21,7 +21,7 @@ import { take, filter } from "rxjs/operators";
 import { HostBinding } from "@angular/core";
 
 @Component({
-  selector: "ng-code-mirror, [ngCodeMirror]",
+  selector: "ng-codemirror, [ngCodeMirror]",
   template: `<textarea #textAreaRef></textarea>`,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
