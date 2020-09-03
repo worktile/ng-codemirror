@@ -88,6 +88,7 @@ export class CodeMirrorComponent
 
   ngOnChanges(simpleChanges: SimpleChanges) {
     const optionsChange = simpleChanges.options;
+    const codeChange = simpleChanges.codeChange;
     if (optionsChange && !optionsChange.firstChange) {
       const changes = this._differ.diff(this.options);
       if (changes) {
@@ -101,6 +102,9 @@ export class CodeMirrorComponent
           this.setOptionIfChanged(option.key, option.currentValue)
         );
       }
+    }
+    if (codeChange) {
+      this.editor.setValue(this.code);
     }
   }
 
