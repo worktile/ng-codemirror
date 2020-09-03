@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.2.0...v1.2.1) (2020-09-03)
+
+
+### Features
+
+* **demo:** add dynamic load mode ([587e3a7](https://github.com/pubuzhixing8/ng-codemirror/commit/587e3a709b08cfc8f843e86e686c638bb504c49e))
+
+
+### Bug Fixes
+
+* fix code can not dynamic change ([038b8f9](https://github.com/pubuzhixing8/ng-codemirror/commit/038b8f98a2e006c30f908f6eef4cd0b1126b364c))
+
 ## [1.2.0](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.1.2...v1.2.0) (2020-08-17)
 
 
