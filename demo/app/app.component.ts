@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { CODE_BLOCK_LANGUAGES, DEFAULT_LANGUAGE, CodeLanguages } from './constants/codemirror';
+import { normalizeCommonJSImport } from './utils/normalizeCommonJSImport';
+const importChart = (mode) => normalizeCommonJSImport(
+  import(`codemirror/mode/${mode}/${mode}`),
+);
 
 @Component({
   selector: 'app-root',
@@ -20,7 +24,8 @@ export class AppComponent {
   mode = DEFAULT_LANGUAGE.value;
   modeOptions = [...CODE_BLOCK_LANGUAGES];
 
-  modeChange(mode: CodeLanguages) {
+  async modeChange(mode: CodeLanguages) {
+    const Chart = await importChart(mode);
     Object.assign({}, this.options, { mode: mode.toString() });
     this.options = {...this.options, mode};
   }
