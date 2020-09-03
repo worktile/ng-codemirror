@@ -28,7 +28,19 @@ import { HostBinding } from "@angular/core";
 })
 export class CodeMirrorComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
-  @Input() code: string;
+  private _code: string;
+
+
+  get code() {
+    return this._code;
+  }
+  @Input() 
+  set code(_code: string) {
+    if (this._code && this.editor && this._code !== _code) {
+      this.editor.setValue(_code)
+    }
+    this._code = _code;
+  }
 
   @Input() autoMaxHeight = 0;
 
@@ -88,7 +100,6 @@ export class CodeMirrorComponent
 
   ngOnChanges(simpleChanges: SimpleChanges) {
     const optionsChange = simpleChanges.options;
-    const codeChange = simpleChanges.code;
     if (optionsChange && !optionsChange.firstChange) {
       const changes = this._differ.diff(this.options);
       if (changes) {
@@ -102,9 +113,6 @@ export class CodeMirrorComponent
           this.setOptionIfChanged(option.key, option.currentValue)
         );
       }
-    }
-    if (codeChange && !codeChange.isFirstChange()) {
-      this.editor.setValue(this.code);
     }
   }
 
@@ -129,7 +137,7 @@ export class CodeMirrorComponent
         "change",
         (cm: codemirror.Editor, change: codemirror.EditorChangeLinkedList) => {
           if (change.origin !== "setValue") {
-            this.code = cm.getValue();
+            this._code = cm.getValue();
             this.codeChange.emit(this.code);
           }
         }
