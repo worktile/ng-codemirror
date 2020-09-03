@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.3](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.2.2...v1.2.3) (2020-09-03)
+
+
+### Bug Fixes
+
+* fix codeChange error ([c8f2f2f](https://github.com/pubuzhixing8/ng-codemirror/commit/c8f2f2f1af91f812db0c6be4f75c873d00bc44ef))
+
 ### [1.2.2](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.2.1...v1.2.2) (2020-09-03)
 
 
