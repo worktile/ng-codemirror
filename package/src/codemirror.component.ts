@@ -103,7 +103,7 @@ export class CodeMirrorComponent
         );
       }
     }
-    if (codeChange && !codeChange.isFirstChange) {
+    if (codeChange && !codeChange.isFirstChange()) {
       this.editor.setValue(this.code);
     }
   }
