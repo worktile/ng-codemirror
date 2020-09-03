@@ -88,7 +88,7 @@ export class CodeMirrorComponent
 
   ngOnChanges(simpleChanges: SimpleChanges) {
     const optionsChange = simpleChanges.options;
-    const codeChange = simpleChanges.codeChange;
+    const codeChange = simpleChanges.code;
     if (optionsChange && !optionsChange.firstChange) {
       const changes = this._differ.diff(this.options);
       if (changes) {
