@@ -1,6 +1,7 @@
 # Angular - Codemirror component
 
-codemirror component for Angular（8.0+）
+codemirror component for Angular（^8.0）
+
 Has been formally verified by the production environment。
 
 **Demo** https://stackblitz.com/ng-codemirror-demo
@@ -10,7 +11,7 @@ Has been formally verified by the production environment。
 - support copy text in readOnly 'nocursor' mode.
 - ensure init codemirror after nativeElement has been attached （codemirror need a real element width）.
 - support flexiable height by autoMaxHeight.
-- support all options by codemirror.
+- support all options by codemirror（^5.52.0）.
 
 ## Alternatives
 
@@ -52,8 +53,7 @@ import "codemirror/mode/markdown/markdown";
 Import the scss file
 
 ```scss
-@import "~codemirror/lib/codemirror";
-@import "~ng-codemirror/style.scss";
+@import "~ng-codemirror/index.scss";
 ```
 
 Use The Component
