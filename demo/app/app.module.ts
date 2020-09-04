@@ -3,12 +3,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CodemirrorModule } from '../../package/src/public-api';
 import { DemoNgZorroAntdModule } from './ng-zorro-antd.module';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { FormsModule } from '@angular/forms';
+import { CodemirrorModule } from 'ng-codemirror';
+
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
 };
