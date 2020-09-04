@@ -30,16 +30,16 @@ export class CodeMirrorComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   private _code: string;
 
-
-  get code() {
-    return this._code;
-  }
   @Input() 
   set code(_code: string) {
     if (this._code && this.editor && this._code !== _code) {
       this.editor.setValue(_code)
     }
     this._code = _code;
+  }
+
+  get code() {
+    return this._code;
   }
 
   @Input() autoMaxHeight = 0;
