@@ -63,8 +63,7 @@ export class CodeMirrorComponent
     private elementRef: ElementRef,
     private ngZone: NgZone,
     private renderer: Renderer2,
-    private _differs: KeyValueDiffers,
-    private _ngZone: NgZone
+    private _differs: KeyValueDiffers
   ) {}
 
   ngOnInit() {

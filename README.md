@@ -4,8 +4,6 @@ codemirror component for Angular（^8.0）
 
 Has been formally verified by the production environment。
 
-**Demo** https://stackblitz.com/ng-codemirror-demo
-
 ## Features
 
 - support copy text in readOnly 'nocursor' mode.
@@ -64,4 +62,16 @@ Use The Component
   [code]="code"
   [autoMaxHeight]="300"
 ></ng-codemirror>
+```
+
+```TS
+  // options 配置
+  options = {
+    lineNumbers: true,
+    readOnly: false, // nocursor can not copy
+    mode: 'javascript',
+    autofocus: true,
+    lineWiseCopyCut: true,
+    cursorBlinkRate: 500 // hide cursor
+  };
 ```
