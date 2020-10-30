@@ -32,7 +32,7 @@ export class CodeMirrorComponent
 
   @Input() 
   set code(_code: string) {
-    if (this._code && this.editor && this._code !== _code) {
+    if (this.editor && this._code !== _code) {
       this.editor.setValue(_code)
     }
     this._code = _code;
