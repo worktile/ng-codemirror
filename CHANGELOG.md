@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.7](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.2.6...v1.2.7) (2020-12-23)
+
+
+### Features
+
+* **demo:** add dialog demo mode ([2549120](https://github.com/pubuzhixing8/ng-codemirror/commit/25491207dac0bafc3abfe26905ccbda5f6934825))
+
+
+### Bug Fixes
+
+* fix codemirror cursor and width problel when show in dialog ([80b5e1a](https://github.com/pubuzhixing8/ng-codemirror/commit/80b5e1a7776e3a297c4d7df4d80f769cf8826ca1))
+
 ### [1.2.6](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.2.5...v1.2.6) (2020-10-30)
 
 
