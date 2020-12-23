@@ -1,10 +1,7 @@
-<div class="demo-codemirror">
-  <div class="global-toolbar">
-    <nz-select class="select-mode" nzShowSearch [(ngModel)]="mode" (ngModelChange)="modeChange($event)">
-      <nz-option [nzValue]="item.value" [nzLabel]="item.name" *ngFor="let item of modeOptions"></nz-option>
-    </nz-select>
-    <label class="ml-4" nz-checkbox [(ngModel)]="options.readOnly" (ngModelChange)="toggleReadonly($event)">readonly</label>
+<div class="demo">
+  <demo-code-block></demo-code-block>
+  <div class="dialog-mode">
+    <button nz-button nzType="primary" (click)="openDialog()">弹框模式</button>
   </div>
-  <ng-codemirror [options]="options" [code]="code"></ng-codemirror>
 </div>
 <router-outlet></router-outlet>
