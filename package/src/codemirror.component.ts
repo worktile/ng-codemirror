@@ -11,23 +11,21 @@ import {
   ChangeDetectionStrategy,
   EventEmitter,
   OnDestroy,
-  AfterViewInit,
   Renderer2,
   KeyValueDiffer,
   KeyValueDiffers,
 } from "@angular/core";
 import * as codemirror from "codemirror";
-import { take, filter } from "rxjs/operators";
 import { HostBinding } from "@angular/core";
+import { timer } from "rxjs";
 
 @Component({
   selector: "ng-codemirror, [ngCodeMirror]",
-  template: `<textarea #textAreaRef></textarea>`,
+  template: `<textarea #textAreaRef style="display:none;"></textarea>`,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CodeMirrorComponent
-  implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class CodeMirrorComponent implements OnInit, OnChanges, OnDestroy {
   private _code: string;
 
   @Input() 
@@ -70,10 +68,7 @@ export class CodeMirrorComponent
     if (!this._differ && this.options) {
       this._differ = this._differs.find(this.options).create();
     }
-  }
-
-  ngAfterViewInit() {
-    if (this.elementRef.nativeElement.offsetWidth > 0) {
+    timer(200).subscribe(() => {
       this.initCodemirror();
       if (this.autoMaxHeight > 0) {
         this.renderer.setStyle(
@@ -82,19 +77,7 @@ export class CodeMirrorComponent
           `${this.autoMaxHeight}px`
         );
       }
-    } else {
-      this.ngZone.onStable
-        .asObservable()
-        .pipe(
-          filter(() => {
-            return this.elementRef.nativeElement.offsetWidth > 0;
-          }),
-          take(1)
-        )
-        .subscribe(() => {
-          this.initCodemirror();
-        });
-    }
+    });
   }
 
   ngOnChanges(simpleChanges: SimpleChanges) {
