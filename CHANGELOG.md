@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.9](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.2.8...v1.2.9) (2020-12-25)
+
+
+### Bug Fixes
+
+* correct applyEditorHeight condition ([87c1a6e](https://github.com/pubuzhixing8/ng-codemirror/commit/87c1a6edc1a408d8491a1095dc320e81b3428530))
+
 ### [1.2.8](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.2.7...v1.2.8) (2020-12-25)
 
 
