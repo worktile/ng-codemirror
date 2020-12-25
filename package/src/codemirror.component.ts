@@ -26,9 +26,11 @@ import { timer } from "rxjs";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CodeMirrorComponent implements OnInit, OnChanges, OnDestroy {
+  private _codeWrapElement: HTMLElement;
+  private _codemirrorContentObserver: MutationObserver;
   private _code: string;
 
-  @Input() 
+  @Input()
   set code(_code: string) {
     if (this.editor && this._code !== _code) {
       this.editor.setValue(_code)
@@ -43,6 +45,8 @@ export class CodeMirrorComponent implements OnInit, OnChanges, OnDestroy {
   @Input() autoMaxHeight = 0;
 
   @Input() options: codemirror.EditorConfiguration;
+
+  @Input() delayRefreshTime = 200;
 
   @Output() codeChange: EventEmitter<string> = new EventEmitter();
 
@@ -62,21 +66,18 @@ export class CodeMirrorComponent implements OnInit, OnChanges, OnDestroy {
     private ngZone: NgZone,
     private renderer: Renderer2,
     private _differs: KeyValueDiffers
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (!this._differ && this.options) {
       this._differ = this._differs.find(this.options).create();
     }
-    timer(200).subscribe(() => {
-      this.initCodemirror();
-      if (this.autoMaxHeight > 0) {
-        this.renderer.setStyle(
-          this.elementRef.nativeElement,
-          "maxHeight",
-          `${this.autoMaxHeight}px`
-        );
+    this.initializeCodemirror();
+    timer(this.delayRefreshTime).subscribe(() => {
+      if (this.autoMaxHeight) {
+        this.initializeAutoMaxHeight();
       }
+      this.editor.refresh();
     });
   }
 
@@ -98,7 +99,7 @@ export class CodeMirrorComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  initCodemirror() {
+  initializeCodemirror() {
     this.ngZone.runOutsideAngular(() => {
       if (!this.options) {
         throw new Error("options is required");
@@ -124,32 +125,22 @@ export class CodeMirrorComponent implements OnInit, OnChanges, OnDestroy {
           }
         }
       );
-      if (this.autoMaxHeight > 0) {
-        this.initMaxHeight();
-      }
     });
   }
 
-  private initMaxHeight() {
-    const codeWrapElement = (this.elementRef
-      .nativeElement as HTMLElement).querySelector(
-      ".CodeMirror-code"
-    ) as HTMLElement;
-    this.applyEditorHeight(codeWrapElement);
-    const codemirrorContentObserver = new MutationObserver(() => {
-      this.applyEditorHeight(codeWrapElement);
+  initializeAutoMaxHeight() {
+    this._codeWrapElement = this.elementRef.nativeElement.querySelector(".CodeMirror-code");
+    this._codemirrorContentObserver = new MutationObserver(() => {
+      this.applyEditorHeight();
     });
-    codemirrorContentObserver.observe(codeWrapElement, {
+    this._codemirrorContentObserver.observe(this._codeWrapElement, {
       childList: true,
     });
   }
 
-  private applyEditorHeight(code: HTMLElement) {
-    if (code.offsetHeight >= this.autoMaxHeight) {
-      const wrapHeight = (this.elementRef
-        .nativeElement as HTMLElement).querySelector(
-        ".CodeMirror"
-      ) as HTMLElement;
+  private applyEditorHeight() {
+    if (this._codeWrapElement.offsetHeight >= this.autoMaxHeight) {
+      const wrapHeight: HTMLElement = this.elementRef.nativeElement.querySelector(".CodeMirror");
       if (wrapHeight.offsetHeight >= this.autoMaxHeight) {
         this.editor.setSize("100%", `${this.autoMaxHeight}px`);
       }
@@ -168,5 +159,9 @@ export class CodeMirrorComponent implements OnInit, OnChanges, OnDestroy {
     this.editor.setOption(optionName as any, newValue);
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    if (this._codemirrorContentObserver) {
+      this._codemirrorContentObserver.disconnect();
+    }
+  }
 }
