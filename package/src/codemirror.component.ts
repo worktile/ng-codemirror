@@ -141,7 +141,7 @@ export class CodeMirrorComponent implements OnInit, OnChanges, OnDestroy {
   private applyEditorHeight() {
     if (this._codeWrapElement.offsetHeight >= this.autoMaxHeight) {
       const wrapHeight: HTMLElement = this.elementRef.nativeElement.querySelector(".CodeMirror");
-      if (wrapHeight.offsetHeight >= this.autoMaxHeight) {
+      if (wrapHeight.offsetHeight > this.autoMaxHeight) {
         this.editor.setSize("100%", `${this.autoMaxHeight}px`);
       }
     } else {
