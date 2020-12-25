@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.8](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.2.7...v1.2.8) (2020-12-25)
+
+
+### Bug Fixes
+
+* **diaog/modal:** refresh codemirror after delay time ([25232bd](https://github.com/pubuzhixing8/ng-codemirror/commit/25232bd37363320ba9c707adfdd05ca603bd66d3))
+
 ### [1.2.7](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.2.6...v1.2.7) (2020-12-23)
 
 
