@@ -61,7 +61,7 @@ export class CodeBlockComponent implements OnInit {
             this.loading = true;
             setTimeout(() => {
                 this.loading = false;
-            }, 1000);
+            }, 100);
         } else {
             this.loading = false;
         }
