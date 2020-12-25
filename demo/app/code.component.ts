@@ -6,15 +6,13 @@ import { CodeLanguages, CODE_BLOCK_LANGUAGES, DEFAULT_LANGUAGE } from "./constan
 @Component({
     selector: 'demo-code-block',
     template: `
-        <ng-container *ngIf="!loading">
-            <div class="global-toolbar">
+        <div class="global-toolbar">
                 <nz-select class="select-mode" nzShowSearch [(ngModel)]="mode" (ngModelChange)="modeChange($event)">
                 <nz-option [nzValue]="item.value" [nzLabel]="item.name" *ngFor="let item of modeOptions"></nz-option>
                 </nz-select>
                 <label class="ml-4" nz-checkbox [(ngModel)]="options.readOnly" (ngModelChange)="toggleReadonly($event)">readonly</label>
-            </div>
-            <ng-codemirror #codemirrorComponent [options]="options" [code]="code"></ng-codemirror>
-        </ng-container>
+        </div>
+        <ng-codemirror *ngIf="!loading" #codemirrorComponent [options]="options" [code]="code"></ng-codemirror>
     `,
     encapsulation: ViewEncapsulation.None,
     host: {
@@ -60,9 +58,10 @@ export class CodeBlockComponent implements OnInit {
     ngOnInit(): void {
         // test dialog case
         if (this.isDialog) {
+            this.loading = true;
             setTimeout(() => {
                 this.loading = false;
-            }, 50);
+            }, 1000);
         } else {
             this.loading = false;
         }
