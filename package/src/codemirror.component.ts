@@ -15,9 +15,12 @@ import {
   KeyValueDiffer,
   KeyValueDiffers,
 } from "@angular/core";
-import * as codemirror from "codemirror";
 import { HostBinding } from "@angular/core";
+import { Editor, EditorChangeLinkedList, EditorConfiguration, EditorFromTextArea } from "codemirror";
 import { timer } from "rxjs";
+
+declare var require: any;
+declare var CodeMirror: any;
 
 @Component({
   selector: "ng-codemirror, [ngCodeMirror]",
@@ -44,7 +47,7 @@ export class CodeMirrorComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() autoMaxHeight = 0;
 
-  @Input() options: codemirror.EditorConfiguration;
+  @Input() options: EditorConfiguration;
 
   @Input() delayRefreshTime = 200;
 
@@ -57,9 +60,20 @@ export class CodeMirrorComponent implements OnInit, OnChanges, OnDestroy {
 
   @HostBinding("class.ng-codemirror") codemirrorClassName = true;
 
-  public editor: codemirror.EditorFromTextArea;
+  public editor: EditorFromTextArea;
 
   private _differ: KeyValueDiffer<string, any>;
+
+  private _codeMirror: any;
+
+  get codeMirrorGlobal(): any {
+    if (this._codeMirror) {
+      return this._codeMirror;
+    }
+
+    this._codeMirror = typeof CodeMirror !== 'undefined' ? CodeMirror : require('codemirror');
+    return this._codeMirror;
+  }
 
   constructor(
     private elementRef: ElementRef,
@@ -104,7 +118,7 @@ export class CodeMirrorComponent implements OnInit, OnChanges, OnDestroy {
       if (!this.options) {
         throw new Error("options is required");
       }
-      this.editor = codemirror.fromTextArea(
+      this.editor = this.codeMirrorGlobal.fromTextArea(
         this.textAreaRef.nativeElement,
         this.options
       );
@@ -118,7 +132,7 @@ export class CodeMirrorComponent implements OnInit, OnChanges, OnDestroy {
       });
       this.editor.on(
         "change",
-        (cm: codemirror.Editor, change: codemirror.EditorChangeLinkedList) => {
+        (cm: Editor, change: EditorChangeLinkedList) => {
           if (change.origin !== "setValue") {
             this._code = cm.getValue();
             this.codeChange.emit(this.code);
