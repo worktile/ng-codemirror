@@ -14,8 +14,10 @@ import {
   Renderer2,
   KeyValueDiffer,
   KeyValueDiffers,
+  forwardRef,
 } from "@angular/core";
 import { HostBinding } from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { Editor, EditorChangeLinkedList, EditorConfiguration, EditorFromTextArea } from "codemirror";
 import { timer } from "rxjs";
 
@@ -27,31 +29,24 @@ declare var CodeMirror: any;
   template: `<textarea #textAreaRef style="display:none;"></textarea>`,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => CodeMirrorComponent),
+    multi: true
+  }]
 })
-export class CodeMirrorComponent implements OnInit, OnChanges, OnDestroy {
+export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChanges, OnDestroy {
   private _codeWrapElement: HTMLElement;
   private _codemirrorContentObserver: MutationObserver;
-  private _code: string;
-
-  @Input()
-  set code(_code: string) {
-    if (this.editor && this._code !== _code) {
-      this.editor.setValue(_code)
-    }
-    this._code = _code;
-  }
-
-  get code() {
-    return this._code;
-  }
+  private value: string = null;
+  private onTouchedCallback: () => void = () => { };
+  private onChangeCallback: (_: any) => void = () => { };
 
   @Input() autoMaxHeight = 0;
 
   @Input() options: EditorConfiguration;
 
   @Input() delayRefreshTime = 200;
-
-  @Output() codeChange: EventEmitter<string> = new EventEmitter();
 
   @Output() focusChange: EventEmitter<boolean> = new EventEmitter();
 
@@ -113,6 +108,20 @@ export class CodeMirrorComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  registerOnChange(fn: any) {
+    this.onChangeCallback = fn;
+  }
+  registerOnTouched(fn: any) {
+    this.onTouchedCallback = fn;
+  }
+
+  writeValue(value: string) {
+    if (this.editor && this.value !== value) {
+      this.editor.setValue(value)
+    }
+    this.value = value;
+  }
+
   initializeCodemirror() {
     this.ngZone.runOutsideAngular(() => {
       if (!this.options) {
@@ -122,7 +131,6 @@ export class CodeMirrorComponent implements OnInit, OnChanges, OnDestroy {
         this.textAreaRef.nativeElement,
         this.options
       );
-      this.editor.setValue(this.code ? this.code : "");
       this.editor.on("focus", () =>
         this.ngZone.run(() => this.focusChange.emit(true))
       );
@@ -134,8 +142,8 @@ export class CodeMirrorComponent implements OnInit, OnChanges, OnDestroy {
         "change",
         (cm: Editor, change: EditorChangeLinkedList) => {
           if (change.origin !== "setValue") {
-            this._code = cm.getValue();
-            this.codeChange.emit(this.code);
+            this.value = cm.getValue();
+            this.onChangeCallback(this.value);
           }
         }
       );

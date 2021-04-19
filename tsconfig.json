@@ -20,10 +20,10 @@
     ],
     "paths": {
       "ng-codemirror": [
-        "dist/ng-codemirror"
+        "package/src/public-api"
       ],
       "ng-codemirror/*": [
-        "dist/ng-codemirror/*"
+        "package/src/*"
       ]
     }
   },

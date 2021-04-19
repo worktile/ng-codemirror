@@ -12,7 +12,7 @@ import { CodeLanguages, CODE_BLOCK_LANGUAGES, DEFAULT_LANGUAGE } from "./constan
                 </nz-select>
                 <label class="ml-4" nz-checkbox [(ngModel)]="options.readOnly" (ngModelChange)="toggleReadonly($event)">readonly</label>
         </div>
-        <ng-codemirror *ngIf="!loading" #codemirrorComponent [options]="options" [code]="code"></ng-codemirror>
+        <ng-codemirror *ngIf="!loading" #codemirrorComponent [options]="options" [ngModel]="code"></ng-codemirror>
     `,
     encapsulation: ViewEncapsulation.None,
     host: {
