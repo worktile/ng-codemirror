@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.2.10...v1.3.0) (2021-04-19)
+
+
+### Features
+
+* support ngModel ([49d81ab](https://github.com/pubuzhixing8/ng-codemirror/commit/49d81abe29955353fdadbb82d4ae7de5e67e8c60))
+
 ### [1.2.10](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.2.9...v1.2.10) (2020-12-31)
 
 
