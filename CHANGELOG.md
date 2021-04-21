@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.3.0...v1.3.1) (2021-04-21)
+
+
+### Bug Fixes
+
+* valid ngModel value ([2b6006a](https://github.com/pubuzhixing8/ng-codemirror/commit/2b6006a75e09c6ed9c1d5f1fdbc645671e70e23b))
+
 ## [1.3.0](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.2.10...v1.3.0) (2021-04-19)
 
 
