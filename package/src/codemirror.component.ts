@@ -116,7 +116,8 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
   }
 
   writeValue(value: string) {
-    if (this.editor && this.value !== value) {
+    const valid = value !== null && value !== undefined;
+    if (this.editor && valid && this.value !== value) {
       this.editor.setValue(value)
     }
     this.value = value;
