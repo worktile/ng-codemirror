@@ -59,7 +59,7 @@ Use The Component
 ```html
 <ng-codemirror
   [options]="options"
-  [code]="code"
+  [ngModel]="code"
   [autoMaxHeight]="300"
 ></ng-codemirror>
 ```
