@@ -22,7 +22,7 @@
             "main": "demo/main.ts",
             "polyfills": "demo/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "demo/favicon.ico",
               "demo/assets"
@@ -46,7 +46,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -137,6 +136,11 @@
           "options": {
             "tsConfig": "package/tsconfig.lib.json",
             "project": "package/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "package/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -160,6 +164,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "demo"
+    }
+  },
+  "defaultProject": "demo",
+  "cli": {
+    "analytics": "a56987c1-8255-4394-a711-6639089d092e"
+  }
 }

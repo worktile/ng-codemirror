@@ -42,7 +42,7 @@ export class CodeBlockComponent implements OnInit {
         this.options = { ...this.options, mode };
     }
 
-    @ViewChild('codemirrorComponent', { static: false })
+    @ViewChild('codemirrorComponent')
     codemirrorComponent: CodeMirrorComponent
 
     constructor(private cdr: ChangeDetectorRef) { }
