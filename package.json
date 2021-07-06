@@ -1,6 +1,6 @@
 {
   "name": "ng-codemirror-demo",
-  "version": "1.5.3",
+  "version": "1.5.5",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

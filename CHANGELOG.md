@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.5](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.5.3...v1.5.5) (2021-07-06)
+
 ### [1.5.3](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.3.2...v1.5.3) (2021-07-06)
 
 
