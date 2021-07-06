@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.3](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.3.2...v1.5.3) (2021-07-06)
+
+
+### Bug Fixes
+
+* clear undo history when assign new value ([f30bbfa](https://github.com/pubuzhixing8/ng-codemirror/commit/f30bbfaa0927bf02dce36541608e9243077b65c4))
+
 ### [1.3.2](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.3.1...v1.3.2) (2021-06-28)
 
 ### [1.3.1](https://github.com/pubuzhixing8/ng-codemirror/compare/v1.3.0...v1.3.1) (2021-04-21)

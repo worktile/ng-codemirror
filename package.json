@@ -1,10 +1,10 @@
 {
   "name": "ng-codemirror-demo",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build ng-codemirror && cpx \"./package/src/*.scss\" dist/ng-codemirror/",
+    "build": "ng build ng-codemirror --prod && cpx \"./package/src/*.scss\" dist/ng-codemirror/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
