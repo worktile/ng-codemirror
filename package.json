@@ -8,15 +8,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "patch:ng-codemirror": "cd package && npm version patch && cd ../ && npm run build && cd dist/ng-codemirror && npm publish --access public",
-    "minor:ng-codemirror": "cd package && npm version minor && cd ../ && npm run build && cd dist/ng-codemirror && npm publish --access public",
-    "major:ng-codemirror": "cd package && npm version major && cd ../ && npm run build && cd dist/ng-codemirror && npm publish --access public",
-    "release:patch": "git add . && standard-version -a --release-as patch",
-    "release:minor": "git add . && standard-version -a --release-as minor",
-    "release:major": "git add . && standard-version -a --release-as major",
-    "patch": "npm run patch:ng-codemirror && npm run release:patch",
-    "minor": "npm run minor:ng-codemirror && npm run release:minor",
-    "major": "npm run major::ng-codemirror && npm run release:major"
+    "release": "wpm release",
+    "pub": "wpm publish && npm run pub-only",
+    "pub-only": "cd dist/ng-codemirror && npm publish --access public"
   },
   "private": true,
   "dependencies": {
@@ -28,25 +22,27 @@
     "@angular/platform-browser": "~12.2.16",
     "@angular/platform-browser-dynamic": "~12.2.16",
     "@angular/router": "~12.2.16",
-    "@types/codemirror": "0.0.87",
     "@ant-design/icons-angular": "~12.0.3",
-    "date-fns": "^2.12.0",
-    "ng-zorro-antd": "~12.1.1",
+    "@types/codemirror": "0.0.87",
     "codemirror": "^5.52.0",
+    "date-fns": "^2.12.0",
+    "ng-codemirror": "^1.5.2",
+    "ng-zorro-antd": "~12.1.1",
     "rxjs": "~6.6.7",
     "tslib": "^2.0.0",
-    "zone.js": "~0.11.4",
-    "ng-codemirror": "^1.5.2"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.2.17",
     "@angular/cli": "~12.2.17",
     "@angular/compiler-cli": "~12.2.16",
     "@angular/language-service": "~12.2.16",
-    "@types/node": "^12.11.1",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "^12.11.1",
+    "@worktile/pkg-manager": "^0.0.9",
     "codelyzer": "^6.0.0",
+    "cpx": "^1.5.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~6.3.4",
@@ -58,8 +54,6 @@
     "protractor": "~7.0.0",
     "ts-node": "~7.0.0",
     "tslint": "~6.1.0",
-    "typescript": "~4.3.5",
-    "standard-version": ">=8.0.1",
-    "cpx": "^1.5.0"
+    "typescript": "~4.3.5"
   }
 }
