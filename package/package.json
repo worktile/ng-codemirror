@@ -5,8 +5,8 @@
     "tslib": "^2.0.0"
   },
   "peerDependencies": {
-    "@angular/common": "^8.2.14",
-    "@angular/core": "^8.2.14",
+    "@angular/common": "^12.0.0",
+    "@angular/core": "^12.0.0",
     "codemirror": "^5.50.0"
   }
 }
