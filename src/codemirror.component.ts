@@ -20,8 +20,8 @@ import { HostBinding } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { Editor, EditorChangeLinkedList, EditorConfiguration, EditorFromTextArea } from "codemirror";
 import { timer } from "rxjs";
+import codemirror from "codemirror";
 
-declare var require: any;
 declare var CodeMirror: any;
 
 @Component({
@@ -66,7 +66,7 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
       return this._codeMirror;
     }
 
-    this._codeMirror = typeof CodeMirror !== 'undefined' ? CodeMirror : require('codemirror');
+    this._codeMirror = typeof CodeMirror !== 'undefined' ? CodeMirror : codemirror;
     return this._codeMirror;
   }
 
