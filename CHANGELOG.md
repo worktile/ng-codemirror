@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [13.0.1](https://github.com/worktile/ng-codemirror/compare/v13.0.0...v13.0.1) (2022-05-18)
+
+
+### Bug Fixes
+
+* bump @types/codemirror and add allowSyntheticDefaultImports for build ([f30ee84](https://github.com/worktile/ng-codemirror/commit/f30ee84258eb42008354953c280951de5b20e3a8))
+* update commjs require to es module import ([821d34f](https://github.com/worktile/ng-codemirror/commit/821d34f8dc9dcf10721bfcf6c5ab688e29323a5d))
+
+
+
 # [13.0.0](https://github.com/worktile/ng-codemirror/compare/v12.0.0...v13.0.0) (2022-05-18)
 
 
