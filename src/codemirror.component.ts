@@ -18,7 +18,7 @@ import {
 } from "@angular/core";
 import { HostBinding } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
-import { Editor, EditorChangeLinkedList, EditorConfiguration, EditorFromTextArea } from "codemirror";
+import { Editor, EditorChange, EditorConfiguration, EditorFromTextArea } from "codemirror";
 import { timer } from "rxjs";
 import codemirror from "codemirror";
 
@@ -142,7 +142,7 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
       });
       this.editor.on(
         "change",
-        (cm: Editor, change: EditorChangeLinkedList) => {
+        (cm: Editor, change: EditorChange) => {
           if (change.origin !== "setValue") {
             this.value = cm.getValue();
             this.onChangeCallback(this.value);
