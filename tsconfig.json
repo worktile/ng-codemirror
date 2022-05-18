@@ -20,10 +20,10 @@
     ],
     "paths": {
       "ng-codemirror": [
-        "package/src/public-api"
+        "src/public-api"
       ],
       "ng-codemirror/*": [
-        "package/src/*"
+        "src/*"
       ]
     }
   }

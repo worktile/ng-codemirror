@@ -120,27 +120,27 @@
     "ng-codemirror": {
       "projectType": "library",
       "root": "package",
-      "sourceRoot": "package/src",
+      "sourceRoot": "src",
       "prefix": "ng",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "package/tsconfig.lib.json",
-            "project": "package/ng-package.json"
+            "tsConfig": "src/tsconfig.lib.json",
+            "project": "src/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "package/tsconfig.lib.prod.json"
+              "tsConfig": "src/tsconfig.lib.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "package/src/test.ts",
-            "tsConfig": "package/tsconfig.spec.json",
-            "karmaConfig": "package/karma.conf.js"
+            "main": "src/test.ts",
+            "tsConfig": "src/tsconfig.spec.json",
+            "karmaConfig": "src/karma.conf.js"
           }
         }
       }
