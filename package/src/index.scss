@@ -1,4 +1,4 @@
-@import "~codemirror/lib/codemirror";
+@use "codemirror/lib/codemirror";
 .ng-codemirror {
   .CodeMirror {
     border: 1px solid #ccc;
