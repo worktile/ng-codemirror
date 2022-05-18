@@ -5,7 +5,6 @@ import { CodeMirrorComponent } from './codemirror.component';
 @NgModule({
     imports: [CommonModule],
     declarations: [CodeMirrorComponent],
-    entryComponents: [CodeMirrorComponent],
     exports: [CodeMirrorComponent]
 })
 export class CodemirrorModule {}

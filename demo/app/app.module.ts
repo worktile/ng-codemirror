@@ -17,22 +17,19 @@ const antDesignIcons = AllIcons as {
 const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key]);
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    CodeBlockComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    CodemirrorModule,
-    DemoNgZorroAntdModule
-  ],
-  entryComponents: [
-    CodeBlockComponent
-  ],
-  providers: [{ provide: NZ_ICONS, useValue: icons }],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        CodeBlockComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        CodemirrorModule,
+        DemoNgZorroAntdModule
+    ],
+    providers: [{ provide: NZ_ICONS, useValue: icons }],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

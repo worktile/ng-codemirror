@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/markdown/markdown';
-import { NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { CodeBlockComponent } from './code.component';
 
 @Component({
