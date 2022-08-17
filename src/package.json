@@ -1,6 +1,6 @@
 {
   "name": "ng-codemirror",
-  "version": "13.0.1",
+  "version": "14.0.0-next.0",
   "dependencies": {
     "tslib": "^2.3.0"
   },

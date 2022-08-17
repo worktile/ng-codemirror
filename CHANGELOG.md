@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [14.0.0-next.0](https://github.com/worktile/ng-codemirror/compare/v13.0.1...v14.0.0-next.0) (2022-08-17)
+
+
+### Features
+
+* upgrade ng to 14 ([8c7b1e9](https://github.com/worktile/ng-codemirror/commit/8c7b1e9a1b8a38c0af00f37ddb5f4943888a6060))
+
+
+
 ## [13.0.1](https://github.com/worktile/ng-codemirror/compare/v13.0.0...v13.0.1) (2022-05-18)
 
 
