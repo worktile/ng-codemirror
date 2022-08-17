@@ -10,7 +10,9 @@
     "e2e": "ng e2e",
     "release": "wpm release",
     "pub": "wpm publish && npm run pub-only",
-    "pub-only": "cd dist/ng-codemirror && npm publish --access public"
+    "pub-only": "cd dist/ng-codemirror && npm publish --access public",
+    "pub-next": "wpm publish && npm run pub-only-next",
+    "pub-only-next": "cd dist/ng-codemirror && npm publish --tag next --access public"
   },
   "private": true,
   "dependencies": {
