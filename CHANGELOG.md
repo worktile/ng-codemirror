@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. See [standa
 
 # [14.0.0](https://github.com/worktile/ng-codemirror/compare/v14.0.0-next.0...v14.0.0) (2022-08-23)
 
+### Features
+
+* upgrade ng to 14 ([8c7b1e9](https://github.com/worktile/ng-codemirror/commit/8c7b1e9a1b8a38c0af00f37ddb5f4943888a6060))
+
 
 
 # [14.0.0-next.0](https://github.com/worktile/ng-codemirror/compare/v13.0.1...v14.0.0-next.0) (2022-08-17)
