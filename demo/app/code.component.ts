@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
-import { CodeMirrorComponent } from "ng-codemirror/ng-codemirror";
+import { CodeMirrorComponent } from "ng-codemirror";
 import { CodeLanguages, CODE_BLOCK_LANGUAGES, DEFAULT_LANGUAGE } from "./constants/codemirror";
 
 @Component({
