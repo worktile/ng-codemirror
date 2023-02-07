@@ -1,6 +1,6 @@
 # Angular - Codemirror component
 
-codemirror component for Angular（^8.0）
+codemirror component for Angular（^8.0+）
 
 Has been formally verified by the production environment。
 
