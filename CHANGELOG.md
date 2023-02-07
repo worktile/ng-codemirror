@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [15.0.0](https://github.com/worktile/ng-codemirror/compare/v14.0.0...v15.0.0) (2023-02-07)
+
+
+### Features
+
+* upgrade ng to 15 ([#25](https://github.com/worktile/ng-codemirror/issues/25)) ([2a25221](https://github.com/worktile/ng-codemirror/commit/2a252212a472c2773abf50c3e56bf51a8b655102))
+
+
+
 # [14.0.0](https://github.com/worktile/ng-codemirror/compare/v14.0.0-next.0...v14.0.0) (2022-08-23)
 
 ### Features
