@@ -24,11 +24,11 @@
     "@angular/platform-browser": "^16.2.1",
     "@angular/platform-browser-dynamic": "^16.2.1",
     "@angular/router": "^16.2.1",
-    "@ant-design/icons-angular": "~15.0.0",
+    "@ant-design/icons-angular": "~16.0.0",
     "@types/codemirror": "5.60.5",
     "codemirror": "^5.52.0",
     "date-fns": "^2.29.3",
-    "ng-zorro-antd": "~15.0.3",
+    "ng-zorro-antd": "~16.1.0",
     "rxjs": "~6.6.7",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.1"

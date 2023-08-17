@@ -18,7 +18,7 @@ export class AppComponent {
       nzTitle: 'Dialog Codemirror',
       nzContent: CodeBlockComponent,
       nzWidth: 800,
-      nzComponentParams: {
+      nzData: {
         isDialog: true
       }
     });
