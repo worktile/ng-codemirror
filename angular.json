@@ -119,7 +119,7 @@
     },
     "ng-codemirror": {
       "projectType": "library",
-      "root": "package",
+      "root": "",
       "sourceRoot": "src",
       "prefix": "ng",
       "architect": {
