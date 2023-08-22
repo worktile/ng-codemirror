@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# 16.0.0 (2023-08-22)
+
+### Features
+
+* build: update ng to 16 ([07e3462](https://github.com/worktile/ng-codemirror/commit/07e34621eb8ce451d0ba9b141d27eb8e1e654af9))
+
+
 # 16.0.0-next.0 (2023-08-17)
 
 
