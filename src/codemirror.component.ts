@@ -1,26 +1,25 @@
 import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  ViewChild,
-  ElementRef,
-  OnChanges,
-  SimpleChanges,
-  NgZone,
   ChangeDetectionStrategy,
+  Component,
+  ElementRef,
   EventEmitter,
-  OnDestroy,
-  Renderer2,
+  HostBinding,
+  Input,
   KeyValueDiffer,
   KeyValueDiffers,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2,
+  SimpleChanges,
+  ViewChild,
   forwardRef,
 } from "@angular/core";
-import { HostBinding } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
-import { Editor, EditorChange, EditorConfiguration, EditorFromTextArea } from "codemirror";
+import codemirror, { Editor, EditorChange, EditorConfiguration, EditorFromTextArea } from "codemirror";
 import { timer } from "rxjs";
-import codemirror from "codemirror";
 
 declare var CodeMirror: any;
 
@@ -33,7 +32,8 @@ declare var CodeMirror: any;
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => CodeMirrorComponent),
     multi: true
-  }]
+  }],
+  standalone: true
 })
 export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChanges, OnDestroy {
   private _codeWrapElement: HTMLElement;
