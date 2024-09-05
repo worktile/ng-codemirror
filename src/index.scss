@@ -1,8 +1,29 @@
-@use "codemirror/lib/codemirror";
 .ng-codemirror {
-  .CodeMirror {
-    border: 1px solid #ccc;
+  .cm-editor {
+    outline: 1px solid #ccc;
     border-radius: 1px;
+    &.cm-focused,&.cm-selected{
+      outline: 1px solid #ccc;
+    }
+    .cm-selectionLayer .cm-selectionBackground{
+      background: rgba($color: #348fe4, $alpha: 0.3);
+    }
+    &.cm-focused .cm-scroller .cm-selectionLayer .cm-selectionBackground{
+      background: rgba($color: #348fe4, $alpha: 0.3);
+    }
+    .cm-scroller{
+      overflow-y: auto;
+    }
+    .cm-selectionMatch {
+      background-color: transparent;
+      color: inherit;
+    }
   }
-  .CodeMirror-focused .CodeMirror-selected { background: rgba($color: #348fe4, $alpha: 0.3); }
+  .cm-activeLineGutter, .cm-activeLine{
+    background-color: transparent;;
+  }
+
+  ::selection{
+    color: inherit;
+  }
 }

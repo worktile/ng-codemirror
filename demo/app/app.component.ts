@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import 'codemirror/mode/javascript/javascript';
-import 'codemirror/mode/markdown/markdown';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { CodeBlockComponent } from './code.component';
 
@@ -11,7 +9,7 @@ import { CodeBlockComponent } from './code.component';
 export class AppComponent {
   title = 'ng-codemirror';
 
-  constructor(private modalService: NzModalService) {}
+  constructor(private modalService: NzModalService) { }
 
   openDialog() {
     this.modalService.create({

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
-import { CodeMirrorComponent } from "ng-codemirror";
+import { CodeMirrorComponent, selectableLanguages } from "ng-codemirror";
 import { CodeLanguages, CODE_BLOCK_LANGUAGES, DEFAULT_LANGUAGE } from "./constants/codemirror";
 
 @Component({
@@ -30,7 +30,8 @@ export class CodeBlockComponent implements OnInit {
     code = initializeCode;
 
     mode = DEFAULT_LANGUAGE.value;
-    modeOptions = [...CODE_BLOCK_LANGUAGES];
+
+    modeOptions = [...selectableLanguages];
 
     loading = false;
 
