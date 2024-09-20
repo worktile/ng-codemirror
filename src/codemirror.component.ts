@@ -33,7 +33,7 @@ export interface NgCodeMirrorOptions {
   mode: string | { name: string, value: string },
   theme?: Theme;
   lineNumbers?: boolean,
-  readOnly?: boolean,
+  readonly?: boolean,
   autofocus?: boolean,
   lineWiseCopyCut?: boolean,
   lineWrapping?: boolean,
@@ -119,7 +119,7 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
 
   ngOnInit() {
     if (!this.languages) {
-      this.languages = languages
+      this.languages = languages;
     }
 
     if (!this._differ && this.options) {
@@ -181,11 +181,11 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
       });
 
       if (this.options.autofocus) {
-        this.view.focus()
+        this.view.focus();
       }
 
-      if (this.options.readOnly) {
-        this.setReadonly(this.options.readOnly);
+      if (this.options.readonly) {
+        this.setReadonly(this.options.readonly);
       }
 
       if (this.options.mode) {
@@ -193,15 +193,19 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
       }
 
       if (this.options.theme) {
-        this.setTheme(this.options.theme)
+        this.setTheme(this.options.theme);
+      }
+
+      if (this.options.lineWrapping) {
+        this.setLineWrapping(this.options.lineWrapping);
       }
 
       this.view?.contentDOM.addEventListener('focus', () => {
-        this.focusChange.emit(true)
+        this.focusChange.emit(true);
       });
 
       this.view?.contentDOM.addEventListener('blur', () => {
-        this.focusChange.emit(false)
+        this.focusChange.emit(false);
       });
     });
   }
@@ -209,7 +213,7 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
   private applyEditorHeight() {
     const editor: HTMLElement = this.elementRef.nativeElement.querySelector(".cm-editor");
     if (this.autoMaxHeight) {
-      editor.style.maxHeight = `${this.autoMaxHeight}px`
+      editor.style.maxHeight = `${this.autoMaxHeight}px`;
     }
   }
 
@@ -229,6 +233,26 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
     if (optionName === 'cursorBlinkRate') {
       this.setCursor(newValue);
     }
+
+    if (optionName === 'theme') {
+      this.setTheme(newValue);
+    }
+
+    if (optionName === 'lineWrapping') {
+      this.setLineWrapping(newValue);
+    }
+
+    if (optionName === 'lineNumbers') {
+      this.setExtensions(this._getAllExtensions());
+    }
+  }
+
+  setLineWrapping(value: boolean) {
+    this._dispatchEffects(this._lineWrappingConf.reconfigure(value ? EditorView.lineWrapping : []));
+  }
+
+  setExtensions(value: Extension[]) {
+    this._dispatchEffects(StateEffect.reconfigure.of(value));
   }
 
   setValue(value: string) {
@@ -260,12 +284,12 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
   }
 
   setCursor(cursorBlinkRate: number) {
-    const cursorStyle = cursorBlinkRate < 0 ? { border: '0px' } : undefined
+    const cursorStyle = cursorBlinkRate < 0 ? { border: '0px' } : undefined;
     this._dispatchEffects(this._themeConf.reconfigure(
       EditorView.theme({
         '.cm-cursor': cursorStyle
       }))
-    )
+    );
   }
 
   setTheme(value: Theme) {
@@ -301,7 +325,7 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
       this._highlightWhitespaceConf.of([]),
       this._languageConf.of([]),
       this.options.lineNumbers ? basicSetup : minimalSetup,
-      ...this.extensions,
+      ...this.extensions
     ];
   }
 
