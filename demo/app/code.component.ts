@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 import { CodeMirrorComponent, selectableLanguages } from "ng-codemirror";
-import { CodeLanguages, CODE_BLOCK_LANGUAGES, DEFAULT_LANGUAGE } from "./constants/codemirror";
+import { CodeLanguages, DEFAULT_LANGUAGE } from "./constants/codemirror";
 
 @Component({
     selector: 'demo-code-block',
