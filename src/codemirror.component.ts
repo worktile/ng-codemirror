@@ -18,10 +18,35 @@ import {
   forwardRef,
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
-import codemirror, { Editor, EditorChange, EditorConfiguration, EditorFromTextArea } from "codemirror";
-import { timer } from "rxjs";
+import { EditorView } from '@codemirror/view';
 
-declare var CodeMirror: any;
+import { LanguageDescription } from '@codemirror/language';
+import { languages } from '@codemirror/language-data';
+
+import { Annotation, Compartment, EditorState, Extension, StateEffect } from '@codemirror/state';
+import { timer } from "rxjs";
+import { basicSetup, minimalSetup } from 'codemirror';
+import { oneDark } from '@codemirror/theme-one-dark';
+import { material } from '@uiw/codemirror-theme-material';
+
+export interface NgCodeMirrorOptions {
+  mode: string | { name: string, value: string },
+  theme?: Theme;
+  lineNumbers?: boolean,
+  readonly?: boolean,
+  autofocus?: boolean,
+  lineWiseCopyCut?: boolean,
+  lineWrapping?: boolean,
+  cursorBlinkRate?: number
+}
+
+export const selectableLanguages =
+  languages.map(lang => ({ name: lang.name, value: lang.name.toLowerCase() }))
+    .sort((a, b) => a.name.localeCompare(b.name))
+
+export const External = Annotation.define<boolean>();
+
+export type Theme = 'light' | 'dark' | 'material' | Extension;
 
 @Component({
   selector: "ng-codemirror, [ngCodeMirror]",
@@ -36,7 +61,6 @@ declare var CodeMirror: any;
   standalone: true
 })
 export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChanges, OnDestroy {
-  private _codeWrapElement: HTMLElement;
   private _codemirrorContentObserver: MutationObserver;
   private value: string = null;
   private onTouchedCallback: () => void = () => { };
@@ -44,9 +68,13 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
 
   @Input() autoMaxHeight = 0;
 
-  @Input() options: EditorConfiguration;
+  @Input() options: NgCodeMirrorOptions;
 
   @Input() delayRefreshTime = 200;
+
+  @Input() extensions: Extension[] = [];
+
+  @Input() languages: LanguageDescription[];
 
   @Output() focusChange: EventEmitter<boolean> = new EventEmitter();
 
@@ -55,20 +83,32 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
 
   @HostBinding("class.ng-codemirror") codemirrorClassName = true;
 
-  public editor: EditorFromTextArea;
+  view?: EditorView;
 
   private _differ: KeyValueDiffer<string, any>;
 
-  private _codeMirror: any;
+  private _readonlyConf = new Compartment();
 
-  get codeMirrorGlobal(): any {
-    if (this._codeMirror) {
-      return this._codeMirror;
+  private _themeConf = new Compartment();
+
+  private _placeholderConf = new Compartment();
+
+  private _indentWithTabConf = new Compartment();
+
+  private _indentUnitConf = new Compartment();
+
+  private _lineWrappingConf = new Compartment();
+
+  private _highlightWhitespaceConf = new Compartment();
+
+  private _languageConf = new Compartment();
+
+  private _updateListener = EditorView.updateListener.of(vu => {
+    if (vu.docChanged && !vu.transactions.some(tr => tr.annotation(External))) {
+      const value = vu.state.doc.toString();
+      this.onChangeCallback(value);
     }
-
-    this._codeMirror = typeof CodeMirror !== 'undefined' ? CodeMirror : codemirror;
-    return this._codeMirror;
-  }
+  });
 
   constructor(
     private elementRef: ElementRef,
@@ -78,15 +118,21 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
   ) { }
 
   ngOnInit() {
+    if (!this.languages) {
+      this.languages = languages;
+    }
+
     if (!this._differ && this.options) {
       this._differ = this._differs.find(this.options).create();
     }
+
     this.initializeCodemirror();
+
     timer(this.delayRefreshTime).subscribe(() => {
       if (this.autoMaxHeight) {
-        this.initializeAutoMaxHeight();
+        this.applyEditorHeight();
       }
-      this.editor.refresh();
+      this.view.requestMeasure();
     });
   }
 
@@ -117,9 +163,8 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
 
   writeValue(value: string) {
     const valid = value !== null && value !== undefined;
-    if (this.editor && valid && this.value !== value) {
-      this.editor.setValue(value);
-      this.editor.clearHistory();
+    if (this.view && valid && this.value !== value) {
+      this.setValue(value);
     }
     this.value = value;
   }
@@ -129,58 +174,159 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
       if (!this.options) {
         throw new Error("options is required");
       }
-      this.editor = this.codeMirrorGlobal.fromTextArea(
-        this.textAreaRef.nativeElement,
-        this.options
-      );
-      this.editor.on("focus", () =>
-        this.ngZone.run(() => this.focusChange.emit(true))
-      );
-      this.editor.on("blur", () => {
-        this.ngZone.run(() => this.focusChange.emit(false));
-        this.editor.setCursor(0, null, { scroll: false });
-      });
-      this.editor.on(
-        "change",
-        (cm: Editor, change: EditorChange) => {
-          if (change.origin !== "setValue") {
-            this.value = cm.getValue();
-            this.onChangeCallback(this.value);
-          }
-        }
-      );
-    });
-  }
 
-  initializeAutoMaxHeight() {
-    this._codeWrapElement = this.elementRef.nativeElement.querySelector(".CodeMirror-code");
-    this._codemirrorContentObserver = new MutationObserver(() => {
-      this.applyEditorHeight();
-    });
-    this._codemirrorContentObserver.observe(this._codeWrapElement, {
-      childList: true,
+      this.view = new EditorView({
+        parent: this.elementRef.nativeElement,
+        state: EditorState.create({ doc: this.value, extensions: this._getAllExtensions() }),
+      });
+
+      if (this.options.autofocus) {
+        this.view.focus();
+      }
+
+      if (this.options.readonly) {
+        this.setReadonly(this.options.readonly);
+      }
+
+      if (this.options.mode) {
+        this.setLanguage(this.options.mode);
+      }
+
+      if (this.options.theme) {
+        this.setTheme(this.options.theme);
+      }
+
+      if (this.options.lineWrapping) {
+        this.setLineWrapping(this.options.lineWrapping);
+      }
+
+      this.view?.contentDOM.addEventListener('focus', () => {
+        this.focusChange.emit(true);
+      });
+
+      this.view?.contentDOM.addEventListener('blur', () => {
+        this.focusChange.emit(false);
+      });
     });
   }
 
   private applyEditorHeight() {
-    if (this._codeWrapElement.offsetHeight >= this.autoMaxHeight) {
-      const wrapHeight: HTMLElement = this.elementRef.nativeElement.querySelector(".CodeMirror");
-      if (wrapHeight.offsetHeight > this.autoMaxHeight) {
-        this.editor.setSize("100%", `${this.autoMaxHeight}px`);
-      }
-    } else {
-      this.editor.setSize("100%", `auto`);
+    const editor: HTMLElement = this.elementRef.nativeElement.querySelector(".cm-editor");
+    if (this.autoMaxHeight) {
+      editor.style.maxHeight = `${this.autoMaxHeight}px`;
     }
   }
 
   setOptionIfChanged(optionName: string, newValue: any) {
-    if (!this.editor) {
+    if (!this.view) {
       return;
     }
 
-    // cast to any to handle strictly typed option names
-    // could possibly import settings strings available in the future
-    this.editor.setOption(optionName as any, newValue);
+    if (optionName === 'readOnly') {
+      this.setReadonly(newValue);
+    }
+
+    if (optionName === 'mode') {
+      this.setLanguage(newValue);
+    }
+
+    if (optionName === 'cursorBlinkRate') {
+      this.setCursor(newValue);
+    }
+
+    if (optionName === 'theme') {
+      this.setTheme(newValue);
+    }
+
+    if (optionName === 'lineWrapping') {
+      this.setLineWrapping(newValue);
+    }
+
+    if (optionName === 'lineNumbers') {
+      this.setExtensions(this._getAllExtensions());
+    }
+  }
+
+  setLineWrapping(value: boolean) {
+    this._dispatchEffects(this._lineWrappingConf.reconfigure(value ? EditorView.lineWrapping : []));
+  }
+
+  setExtensions(value: Extension[]) {
+    this._dispatchEffects(StateEffect.reconfigure.of(value));
+  }
+
+  setValue(value: string) {
+    this.view?.dispatch({
+      changes: { from: 0, to: this.view.state.doc.length, insert: value },
+    });
+  }
+
+  setReadonly(value: boolean) {
+    this._dispatchEffects(this._readonlyConf.reconfigure(EditorState.readOnly.of(value)));
+  }
+
+  setLanguage(lang: string | any) {
+    if (!lang) {
+      return;
+    }
+
+    if (this.languages.length === 0) {
+      if (this.view) {
+        console.error('No supported languages. Please set the `languages` prop at first.');
+      }
+      return;
+    }
+
+    const langDesc = this._findLanguage(lang || lang.name);
+    langDesc?.load().then(lang => {
+      this._dispatchEffects(this._languageConf.reconfigure([lang]));
+    });
+  }
+
+  setCursor(cursorBlinkRate: number) {
+    const cursorStyle = cursorBlinkRate < 0 ? { border: '0px' } : undefined;
+    this._dispatchEffects(this._themeConf.reconfigure(
+      EditorView.theme({
+        '.cm-cursor': cursorStyle
+      }))
+    );
+  }
+
+  setTheme(value: Theme) {
+    this._dispatchEffects(
+      this._themeConf.reconfigure(value === 'light' ? [] : value === 'dark' ? oneDark : value === 'material' ? material : value)
+    );
+  }
+
+  private _dispatchEffects(effects: StateEffect<any> | readonly StateEffect<any>[]) {
+    return this.view?.dispatch({ effects });
+  }
+
+  private _findLanguage(name: string) {
+    for (const lang of this.languages) {
+      for (const alias of [lang.name, ...lang.alias]) {
+        if (name.toLowerCase() === alias.toLowerCase()) {
+          return lang;
+        }
+      }
+    }
+    return null;
+  }
+
+  private _getAllExtensions() {
+    return [
+      this._updateListener,
+      this._readonlyConf.of([]),
+      this._themeConf.of([]),
+      this._placeholderConf.of([]),
+      this._indentWithTabConf.of([]),
+      this._indentUnitConf.of([]),
+      this._lineWrappingConf.of([]),
+      this._highlightWhitespaceConf.of([]),
+      this._languageConf.of([]),
+      this.options.lineNumbers ? basicSetup : minimalSetup,
+      ...this.extensions
+    ];
   }
 
   ngOnDestroy() {
