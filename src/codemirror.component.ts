@@ -66,13 +66,12 @@ export type Theme = "light" | "dark" | "material" | Extension;
   standalone: true,
 })
 export class CodeMirrorComponent
-  implements OnInit, ControlValueAccessor, OnChanges
-{
+  implements OnInit, ControlValueAccessor, OnChanges {
   private value: string = null;
 
-  private onTouchedCallback: () => void = () => {};
+  private onTouchedCallback: () => void = () => { };
 
-  private onChangeCallback: (_: any) => void = () => {};
+  private onChangeCallback: (_: any) => void = () => { };
 
   @Input() autoMaxHeight = 0;
 
@@ -126,7 +125,7 @@ export class CodeMirrorComponent
     private ngZone: NgZone,
     private renderer: Renderer2,
     private _differs: KeyValueDiffers
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (!this.languages) {
@@ -230,10 +229,10 @@ export class CodeMirrorComponent
   }
 
   private applyEditorHeight() {
-    const editor: HTMLElement =
-      this.elementRef.nativeElement.querySelector(".cm-editor");
+    const editor: HTMLElement = this.elementRef.nativeElement.querySelector(".cm-editor");
     if (this.autoMaxHeight) {
-      editor.style.maxHeight = `${this.autoMaxHeight}px`;
+      editor.style.width = "100%";
+      editor.style.height = "auto";
     }
   }
 
@@ -326,10 +325,10 @@ export class CodeMirrorComponent
         value === "light"
           ? []
           : value === "dark"
-          ? oneDark
-          : value === "material"
-          ? material
-          : value
+            ? oneDark
+            : value === "material"
+              ? material
+              : value
       )
     );
   }
