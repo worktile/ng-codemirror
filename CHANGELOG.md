@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [18.1.0-next.0](https://github.com/worktile/ng-codemirror/compare/v18.1.0-next...v18.1.0-next.0) (2024-09-20)
+
+
+
 # [18.1.0-next](https://github.com/worktile/ng-codemirror/compare/v18.0.0...v18.1.0-next) (2024-09-20)
 
 
