@@ -30,14 +30,14 @@ import { oneDark } from '@codemirror/theme-one-dark';
 import { material } from '@uiw/codemirror-theme-material';
 
 export interface NgCodeMirrorOptions {
-  mode: string | { name: string, value: string },
+  mode: string | { name: string, value: string };
   theme?: Theme;
-  lineNumbers?: boolean,
-  readonly?: boolean,
-  autofocus?: boolean,
-  lineWiseCopyCut?: boolean,
-  lineWrapping?: boolean,
-  cursorBlinkRate?: number
+  lineNumbers?: boolean;
+  readonly?: boolean;
+  autofocus?: boolean;
+  lineWiseCopyCut?: boolean;
+  lineWrapping?: boolean;
+  cursorBlinkRate?: number;
 }
 
 export const selectableLanguages =
@@ -211,10 +211,11 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
   }
 
   private applyEditorHeight() {
-    const editor: HTMLElement = this.elementRef.nativeElement.querySelector(".cm-editor");
     if (this.autoMaxHeight) {
-      editor.style.maxHeight = `${this.autoMaxHeight}px`;
-    }
+      const editor: HTMLElement = this.elementRef.nativeElement.querySelector(".cm-editor");
+      editor.style.width = '100%';
+      editor.style.height = 'auto';
+  }
   }
 
   setOptionIfChanged(optionName: string, newValue: any) {
