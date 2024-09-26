@@ -126,7 +126,9 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
       this._differ = this._differs.find(this.options).create();
     }
 
-    this.initializeCodemirror();
+    setTimeout(() => {
+      this.initializeCodemirror();
+    }, 20);
 
     timer(this.delayRefreshTime).subscribe(() => {
       if (this.autoMaxHeight) {
@@ -266,7 +268,7 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
     this._dispatchEffects(this._readonlyConf.reconfigure(EditorState.readOnly.of(value)));
   }
 
-  setLanguage(lang: string | any) {
+  setLanguage(lang: (string | { name: string, value: string })) {
     if (!lang) {
       return;
     }
@@ -278,7 +280,7 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
       return;
     }
 
-    const langDesc = this._findLanguage(lang || lang.name);
+    const langDesc = this._findLanguage(typeof lang === 'string' ? lang : lang.name);
     langDesc?.load().then(lang => {
       this._dispatchEffects(this._languageConf.reconfigure([lang]));
     });
