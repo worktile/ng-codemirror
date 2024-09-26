@@ -2,6 +2,8 @@
   .cm-editor {
     outline: 1px solid #ccc;
     border-radius: 1px;
+    width: 100%;
+    height: auto;
     &.cm-focused,&.cm-selected{
       outline: 1px solid #ccc;
     }
