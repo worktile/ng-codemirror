@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [18.1.0-next.1](https://github.com/worktile/ng-codemirror/compare/v18.1.0-next.0...v18.1.0-next.1) (2024-09-27)
+
+
+### Features
+
+* delay initialize codemirror ([#38](https://github.com/worktile/ng-codemirror/issues/38)) ([f238362](https://github.com/worktile/ng-codemirror/commit/f238362ecf43365a4b68500d423953cb69e64e6f))
+
+
+
 # [18.1.0-next.0](https://github.com/worktile/ng-codemirror/compare/v18.1.0-next...v18.1.0-next.0) (2024-09-20)
 
 
