@@ -4,5 +4,10 @@
   "lib": {
     "entryFile": "public-api.ts"
   },
-  "allowedNonPeerDependencies": ["codemirror"]
+  "allowedNonPeerDependencies": [
+    "codemirror",
+    "@codemirror/language-data",
+    "@codemirror/theme-one-dark",
+    "@uiw/codemirror-theme-material"
+  ]
 }

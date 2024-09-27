@@ -12,25 +12,21 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  Renderer2,
   SimpleChanges,
   ViewChild,
-  forwardRef,
-} from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+  forwardRef
+} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EditorView } from '@codemirror/view';
-
 import { LanguageDescription } from '@codemirror/language';
 import { languages } from '@codemirror/language-data';
-
 import { Annotation, Compartment, EditorState, Extension, StateEffect } from '@codemirror/state';
-import { timer } from "rxjs";
 import { basicSetup, minimalSetup } from 'codemirror';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { material } from '@uiw/codemirror-theme-material';
 
 export interface NgCodeMirrorOptions {
-  mode: string | { name: string, value: string };
+  mode: string | { name: string; value: string };
   theme?: Theme;
   lineNumbers?: boolean;
   readonly?: boolean;
@@ -40,37 +36,35 @@ export interface NgCodeMirrorOptions {
   cursorBlinkRate?: number;
 }
 
-export const selectableLanguages =
-  languages.map(lang => ({ name: lang.name, value: lang.name.toLowerCase() }))
-    .sort((a, b) => a.name.localeCompare(b.name))
+export const selectableLanguages = languages
+  .map(lang => ({ name: lang.name, value: lang.name.toLowerCase() }))
+  .sort((a, b) => a.name.localeCompare(b.name));
 
 export const External = Annotation.define<boolean>();
 
 export type Theme = 'light' | 'dark' | 'material' | Extension;
 
 @Component({
-  selector: "ng-codemirror, [ngCodeMirror]",
+  selector: 'ng-codemirror, [ngCodeMirror]',
   template: `<textarea #textAreaRef style="display:none;"></textarea>`,
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => CodeMirrorComponent),
-    multi: true
-  }],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => CodeMirrorComponent),
+      multi: true
+    }
+  ],
   standalone: true
 })
 export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChanges, OnDestroy {
   private _codemirrorContentObserver: MutationObserver;
   private value: string = null;
-  private onTouchedCallback: () => void = () => { };
-  private onChangeCallback: (_: any) => void = () => { };
-
-  @Input() autoMaxHeight = 0;
+  private onTouchedCallback: () => void = () => {};
+  private onChangeCallback: (_: any) => void = () => {};
 
   @Input() options: NgCodeMirrorOptions;
-
-  @Input() delayRefreshTime = 200;
 
   @Input() extensions: Extension[] = [];
 
@@ -78,10 +72,10 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
 
   @Output() focusChange: EventEmitter<boolean> = new EventEmitter();
 
-  @ViewChild("textAreaRef", { read: ElementRef, static: true })
+  @ViewChild('textAreaRef', { read: ElementRef, static: true })
   textAreaRef: ElementRef;
 
-  @HostBinding("class.ng-codemirror") codemirrorClassName = true;
+  @HostBinding('class.ng-codemirror') codemirrorClassName = true;
 
   view?: EditorView;
 
@@ -110,12 +104,7 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
     }
   });
 
-  constructor(
-    private elementRef: ElementRef,
-    private ngZone: NgZone,
-    private renderer: Renderer2,
-    private _differs: KeyValueDiffers
-  ) { }
+  constructor(private elementRef: ElementRef, private ngZone: NgZone, private _differs: KeyValueDiffers) {}
 
   ngOnInit() {
     if (!this.languages) {
@@ -126,14 +115,9 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
       this._differ = this._differs.find(this.options).create();
     }
 
-    this.initializeCodemirror();
-
-    timer(this.delayRefreshTime).subscribe(() => {
-      if (this.autoMaxHeight) {
-        this.applyEditorHeight();
-      }
-      this.view.requestMeasure();
-    });
+    setTimeout(() => {
+      this.initializeCodemirror();
+    }, 20);
   }
 
   ngOnChanges(simpleChanges: SimpleChanges) {
@@ -141,15 +125,9 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
     if (optionsChange && !optionsChange.firstChange) {
       const changes = this._differ.diff(this.options);
       if (changes) {
-        changes.forEachChangedItem((option) =>
-          this.setOptionIfChanged(option.key, option.currentValue)
-        );
-        changes.forEachAddedItem((option) =>
-          this.setOptionIfChanged(option.key, option.currentValue)
-        );
-        changes.forEachRemovedItem((option) =>
-          this.setOptionIfChanged(option.key, option.currentValue)
-        );
+        changes.forEachChangedItem(option => this.setOptionIfChanged(option.key, option.currentValue));
+        changes.forEachAddedItem(option => this.setOptionIfChanged(option.key, option.currentValue));
+        changes.forEachRemovedItem(option => this.setOptionIfChanged(option.key, option.currentValue));
       }
     }
   }
@@ -172,12 +150,15 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
   initializeCodemirror() {
     this.ngZone.runOutsideAngular(() => {
       if (!this.options) {
-        throw new Error("options is required");
+        throw new Error('options is required');
       }
 
       this.view = new EditorView({
         parent: this.elementRef.nativeElement,
-        state: EditorState.create({ doc: this.value, extensions: this._getAllExtensions() }),
+        state: EditorState.create({
+          doc: this.value,
+          extensions: this._getAllExtensions()
+        })
       });
 
       if (this.options.autofocus) {
@@ -208,14 +189,6 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
         this.focusChange.emit(false);
       });
     });
-  }
-
-  private applyEditorHeight() {
-    if (this.autoMaxHeight) {
-      const editor: HTMLElement = this.elementRef.nativeElement.querySelector(".cm-editor");
-      editor.style.width = '100%';
-      editor.style.height = 'auto';
-  }
   }
 
   setOptionIfChanged(optionName: string, newValue: any) {
@@ -258,7 +231,7 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
 
   setValue(value: string) {
     this.view?.dispatch({
-      changes: { from: 0, to: this.view.state.doc.length, insert: value },
+      changes: { from: 0, to: this.view.state.doc.length, insert: value }
     });
   }
 
@@ -266,7 +239,7 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
     this._dispatchEffects(this._readonlyConf.reconfigure(EditorState.readOnly.of(value)));
   }
 
-  setLanguage(lang: string | any) {
+  setLanguage(lang: string | { name: string; value: string }) {
     if (!lang) {
       return;
     }
@@ -278,7 +251,7 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
       return;
     }
 
-    const langDesc = this._findLanguage(lang || lang.name);
+    const langDesc = this._findLanguage(typeof lang === 'string' ? lang : lang.name);
     langDesc?.load().then(lang => {
       this._dispatchEffects(this._languageConf.reconfigure([lang]));
     });
@@ -286,10 +259,12 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
 
   setCursor(cursorBlinkRate: number) {
     const cursorStyle = cursorBlinkRate < 0 ? { border: '0px' } : undefined;
-    this._dispatchEffects(this._themeConf.reconfigure(
-      EditorView.theme({
-        '.cm-cursor': cursorStyle
-      }))
+    this._dispatchEffects(
+      this._themeConf.reconfigure(
+        EditorView.theme({
+          '.cm-cursor': cursorStyle
+        })
+      )
     );
   }
 
