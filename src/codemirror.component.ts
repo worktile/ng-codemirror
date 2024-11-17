@@ -21,9 +21,9 @@ import { EditorView } from '@codemirror/view';
 import { LanguageDescription } from '@codemirror/language';
 import { languages } from '@codemirror/language-data';
 import { Annotation, Compartment, EditorState, Extension, StateEffect } from '@codemirror/state';
-import { basicSetup, minimalSetup } from 'codemirror';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { material } from '@uiw/codemirror-theme-material';
+import { basicSetup, minimalSetup } from './setup';
 
 export interface NgCodeMirrorOptions {
   mode: string | { name: string; value: string };
