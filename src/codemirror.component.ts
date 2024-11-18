@@ -196,7 +196,7 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
       return;
     }
 
-    if (optionName === 'readOnly') {
+    if (optionName === 'readonly') {
       this.setReadonly(newValue);
     }
 

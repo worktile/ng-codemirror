@@ -15,7 +15,7 @@ import { CodeLanguages, CODE_BLOCK_LANGUAGES, DEFAULT_LANGUAGE } from "./constan
             <nz-select class="ml-4 " nzShowSearch [(ngModel)]="lineWrap" (ngModelChange)="lineWrapChange($event)">
                 <nz-option [nzValue]="item.value" [nzLabel]="item.name" *ngFor="let item of lineWrapOptions"></nz-option>
             </nz-select>
-            <label class="ml-4" nz-checkbox [(ngModel)]="options.readOnly" (ngModelChange)="toggleReadonly($event)">readonly</label>
+            <label class="ml-4" nz-checkbox [(ngModel)]="options.readonly" (ngModelChange)="toggleReadonly($event)">readonly</label>
         </div>
         <ng-codemirror *ngIf="!loading" #codemirrorComponent [options]="options" [ngModel]="code"></ng-codemirror>
     `,
@@ -27,7 +27,7 @@ import { CodeLanguages, CODE_BLOCK_LANGUAGES, DEFAULT_LANGUAGE } from "./constan
 export class CodeBlockComponent implements OnInit {
     options = {
         lineNumbers: true,
-        readOnly: false, // nocursor can not copy
+        readonly: false, // nocursor can not copy
         mode: 'javascript',
         autofocus: true,
         lineWiseCopyCut: true,
@@ -73,9 +73,9 @@ export class CodeBlockComponent implements OnInit {
 
     toggleReadonly(checked) {
         if (checked) {
-            this.options = { ...this.options, readOnly: true, cursorBlinkRate: -1 };
+            this.options = { ...this.options, readonly: true, cursorBlinkRate: -1 };
         } else {
-            this.options = { ...this.options, readOnly: false, cursorBlinkRate: 500 };
+            this.options = { ...this.options, readonly: false, cursorBlinkRate: 500 };
         }
     }
 
@@ -105,7 +105,7 @@ export class AppComponent {
   title = 'ng-codemirror';
   options = {
     lineNumbers: true,
-    readOnly: false, // nocursor can not copy
+    readonly: false, // nocursor can not copy
     mode: 'javascript',
     autofocus: true,
     lineWiseCopyCut: true,
