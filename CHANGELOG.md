@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [18.1.1](https://github.com/worktile/ng-codemirror/compare/v18.1.0-next.6...v18.1.1) (2024-12-19)
+
+
+### Bug Fixes
+
+* error because multiple instances of @codemirror/state are loaded #WIK-17046 ([#42](https://github.com/worktile/ng-codemirror/issues/42)) ([8191d21](https://github.com/worktile/ng-codemirror/commit/8191d210d3e010010a306fce069fff46310445e0)), closes [#WIK-17046](https://github.com/worktile/ng-codemirror/issues/WIK-17046)
+
+
+
 # [18.1.0-next.6](https://github.com/worktile/ng-codemirror/compare/v18.1.0-next.5...v18.1.0-next.6) (2024-11-18)
 
 
