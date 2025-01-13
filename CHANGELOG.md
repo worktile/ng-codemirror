@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [18.1.4](https://github.com/worktile/ng-codemirror/compare/v18.1.3...v18.1.4) (2025-01-13)
+
+
+### Features
+
+* set selection to collapsed when blur ([ed58ce5](https://github.com/worktile/ng-codemirror/commit/ed58ce5f3c1d0e9702c59d4f356162b0586c2a20))
+
+
+
 ## [18.1.3](https://github.com/worktile/ng-codemirror/compare/v18.1.2...v18.1.3) (2025-01-12)
 
 
