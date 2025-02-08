@@ -17,7 +17,8 @@ import {
   forwardRef
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { EditorView } from '@codemirror/view';
+import { EditorView, keymap } from '@codemirror/view';
+import {indentWithTab} from "@codemirror/commands"
 import { LanguageDescription } from '@codemirror/language';
 import { languages } from '@codemirror/language-data';
 import { Annotation, Compartment, EditorState, Extension, StateEffect } from '@codemirror/state';
@@ -296,7 +297,7 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
       this._readonlyConf.of([]),
       this._themeConf.of([]),
       this._placeholderConf.of([]),
-      this._indentWithTabConf.of([]),
+      this._indentWithTabConf.of([keymap.of([indentWithTab])]),
       this._indentUnitConf.of([]),
       this._lineWrappingConf.of([]),
       this._highlightWhitespaceConf.of([]),
