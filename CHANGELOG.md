@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [18.1.5](https://github.com/worktile/ng-codemirror/compare/v18.1.4...v18.1.5) (2025-02-11)
+
+
+### Features
+
+* support tab intent ([fc6a286](https://github.com/worktile/ng-codemirror/commit/fc6a286402d34953d867d507928d8d9169ea61b9))
+
+
+
 ## [18.1.4](https://github.com/worktile/ng-codemirror/compare/v18.1.3...v18.1.4) (2025-01-13)
 
 
