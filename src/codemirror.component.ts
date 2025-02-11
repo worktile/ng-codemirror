@@ -187,7 +187,6 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
       });
 
       this.view?.contentDOM.addEventListener('blur', () => {
-        this.view.dispatch({ selection: { anchor: 0, head: 0 } });
         this.focusChange.emit(false);
       });
     });
