@@ -22,7 +22,8 @@ import { CodeLanguages, CODE_BLOCK_LANGUAGES, DEFAULT_LANGUAGE } from "./constan
     encapsulation: ViewEncapsulation.None,
     host: {
         ['class']: 'demo-codemirror'
-    }
+    },
+    standalone: false
 })
 export class CodeBlockComponent implements OnInit {
     options = {

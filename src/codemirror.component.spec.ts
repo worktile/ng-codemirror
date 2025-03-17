@@ -12,6 +12,7 @@ import { CodemirrorModule } from "./codemirror.module";
     [options]="options"
     [(ngModel)]="value"
   ></ng-codemirror>`,
+    standalone: false
 })
 class CodemirrorBasicTestComponent {
   options = {};
