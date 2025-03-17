@@ -4,7 +4,8 @@ import { CodeBlockComponent } from './code.component';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  standalone: false
 })
 export class AppComponent {
   title = 'ng-codemirror';
