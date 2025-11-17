@@ -6,19 +6,27 @@ import { CodeLanguages, CODE_BLOCK_LANGUAGES, DEFAULT_LANGUAGE } from "./constan
     selector: 'demo-code-block',
     template: `
         <div class="global-toolbar">
-            <nz-select class="select-mode" nzShowSearch [(ngModel)]="mode" (ngModelChange)="modeChange($event)">
-                <nz-option [nzValue]="item.value" [nzLabel]="item.name" *ngFor="let item of modeOptions"></nz-option>
-            </nz-select>
-            <nz-select class="ml-4 " nzShowSearch [(ngModel)]="lineNumber" (ngModelChange)="lineNumberChange($event)">
-                <nz-option [nzValue]="item.value" [nzLabel]="item.name" *ngFor="let item of lineNumberOptions"></nz-option>
-            </nz-select>
-            <nz-select class="ml-4 " nzShowSearch [(ngModel)]="lineWrap" (ngModelChange)="lineWrapChange($event)">
-                <nz-option [nzValue]="item.value" [nzLabel]="item.name" *ngFor="let item of lineWrapOptions"></nz-option>
-            </nz-select>
-            <label class="ml-4" nz-checkbox [(ngModel)]="options.readonly" (ngModelChange)="toggleReadonly($event)">readonly</label>
+          <nz-select class="select-mode" nzShowSearch [(ngModel)]="mode" (ngModelChange)="modeChange($event)">
+            @for (item of modeOptions; track item.name) {
+              <nz-option [nzValue]="item.value" [nzLabel]="item.name"></nz-option>
+            }
+          </nz-select>
+          <nz-select class="ml-4 " nzShowSearch [(ngModel)]="lineNumber" (ngModelChange)="lineNumberChange($event)">
+            @for (item of lineNumberOptions; track item.value) {
+              <nz-option [nzValue]="item.value" [nzLabel]="item.name"></nz-option>
+            }
+          </nz-select>
+          <nz-select class="ml-4 " nzShowSearch [(ngModel)]="lineWrap" (ngModelChange)="lineWrapChange($event)">
+            @for (item of lineWrapOptions; track item.value) {
+              <nz-option [nzValue]="item.value" [nzLabel]="item.name"></nz-option>
+            }
+          </nz-select>
+          <label class="ml-4" nz-checkbox [(ngModel)]="options.readonly" (ngModelChange)="toggleReadonly($event)">readonly</label>
         </div>
-        <ng-codemirror *ngIf="!loading" #codemirrorComponent [options]="options" [ngModel]="code"></ng-codemirror>
-    `,
+        @if (!loading) {
+          <ng-codemirror #codemirrorComponent [options]="options" [ngModel]="code"></ng-codemirror>
+        }
+        `,
     encapsulation: ViewEncapsulation.None,
     host: {
         ['class']: 'demo-codemirror'
