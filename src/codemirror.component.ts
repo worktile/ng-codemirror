@@ -14,7 +14,8 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
-  forwardRef
+  forwardRef,
+  signal
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EditorView, keymap } from '@codemirror/view';
@@ -80,6 +81,8 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
 
   view?: EditorView;
 
+  isDelayRender = signal(false);
+
   private _differ: KeyValueDiffer<string, any>;
 
   private _readonlyConf = new Compartment();
@@ -114,6 +117,14 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
 
     if (!this._differ && this.options) {
       this._differ = this._differs.find(this.options).create();
+    }
+
+    if (this.isDelayRender()) {
+      setTimeout(() => {
+        this.initializeCodemirror();
+      }, 20);
+    } else {
+      this.initializeCodemirror();
     }
 
     setTimeout(() => {
