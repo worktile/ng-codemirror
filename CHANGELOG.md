@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [20.2.1](https://github.com/worktile/ng-codemirror/compare/v20.2.0...v20.2.1) (2025-11-28)
+
+
+### Bug Fixes
+
+* fix repeat initialization ([66b0457](https://github.com/worktile/ng-codemirror/commit/66b0457b0092c44fb621811b5c469b9b7cf79c53))
+
+
+
 # [20.2.0](https://github.com/worktile/ng-codemirror/compare/v20.0.0...v20.2.0) (2025-11-28)
 
 
