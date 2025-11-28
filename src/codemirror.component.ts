@@ -126,10 +126,6 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
     } else {
       this.initializeCodemirror();
     }
-
-    setTimeout(() => {
-      this.initializeCodemirror();
-    }, 20);
   }
 
   ngOnChanges(simpleChanges: SimpleChanges) {
