@@ -15,7 +15,7 @@ import {
   SimpleChanges,
   ViewChild,
   forwardRef,
-  signal
+  input,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EditorView, keymap } from '@codemirror/view';
@@ -81,7 +81,7 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
 
   view?: EditorView;
 
-  isDelayRender = signal(false);
+  isDelayRender = input(false);
 
   private _differ: KeyValueDiffer<string, any>;
 
