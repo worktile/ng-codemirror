@@ -60,8 +60,7 @@ export type Theme = 'light' | 'dark' | 'material' | Extension;
   ],
   standalone: true
 })
-export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChanges, OnDestroy {
-  private _codemirrorContentObserver: MutationObserver;
+export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChanges {
   private value: string = null;
   private onTouchedCallback: () => void = () => {};
   private onChangeCallback: (_: any) => void = () => {};
@@ -227,6 +226,10 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
     if (optionName === 'lineNumbers') {
       this.setExtensions(this._getAllExtensions());
     }
+
+    if (optionName === 'autofocus') {
+      this.view?.focus();
+    }
   }
 
   setLineWrapping(value: boolean) {
@@ -311,11 +314,5 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
       this.options.lineNumbers ? basicSetup : minimalSetup,
       ...this.extensions
     ];
-  }
-
-  ngOnDestroy() {
-    if (this._codemirrorContentObserver) {
-      this._codemirrorContentObserver.disconnect();
-    }
   }
 }
