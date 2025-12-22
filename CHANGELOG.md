@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [20.2.3](https://github.com/worktile/ng-codemirror/compare/v20.2.2...v20.2.3) (2025-12-22)
+
+
+### Features
+
+* **option:** support autofocus in option changed ([8694f20](https://github.com/worktile/ng-codemirror/commit/8694f20684d09801fc6481313fb48b2da8682efc))
+
+
+
 ## [20.2.2](https://github.com/worktile/ng-codemirror/compare/v20.2.1...v20.2.2) (2025-12-01)
 
 
