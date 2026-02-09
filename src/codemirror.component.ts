@@ -248,6 +248,9 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
 
   setReadonly(value: boolean) {
     this._dispatchEffects(this._readonlyConf.reconfigure(EditorState.readOnly.of(value)));
+    this._dispatchEffects(
+      this._readonlyConf.reconfigure(EditorView.editable.of(!value)),
+    );
   }
 
   setLanguage(lang: string | { name: string; value: string }) {
