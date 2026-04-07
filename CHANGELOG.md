@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [21.0.1](https://github.com/worktile/ng-codemirror/compare/v21.0.0...v21.0.1) (2026-04-07)
+
+
+### Bug Fixes
+
+* should not focus view if newValue is false ([731b01c](https://github.com/worktile/ng-codemirror/commit/731b01c0090e107b9a6cda78cdd4aea586517623))
+
+
+
 # [21.0.0](https://github.com/worktile/ng-codemirror/compare/v20.2.4...v21.0.0) (2026-03-31)
 
 
