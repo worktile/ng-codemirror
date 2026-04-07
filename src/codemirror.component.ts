@@ -227,7 +227,7 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
       this.setExtensions(this._getAllExtensions());
     }
 
-    if (optionName === 'autofocus') {
+    if (optionName === 'autofocus' && newValue) {
       this.view?.focus();
     }
   }
