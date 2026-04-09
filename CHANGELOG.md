@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [21.0.2](https://github.com/worktile/ng-codemirror/compare/v21.0.1...v21.0.2) (2026-04-09)
+
+
+### Bug Fixes
+
+* update peerDependencies to ^21.0.0 for angular ([6d51af3](https://github.com/worktile/ng-codemirror/commit/6d51af3413cc214941ea8baac7ca229d09766a10))
+
+
+
 ## [21.0.1](https://github.com/worktile/ng-codemirror/compare/v21.0.0...v21.0.1) (2026-04-07)
 
 
