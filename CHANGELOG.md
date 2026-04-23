@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [21.0.3](https://github.com/worktile/ng-codemirror/compare/v21.0.2...v21.0.3) (2026-04-23)
+
+
+### Bug Fixes
+
+* assign background-color to transparent when codemirror is blur ([7281eec](https://github.com/worktile/ng-codemirror/commit/7281eecc1d29b06bbc85c069d62aa6239dc2fee8))
+
+
+
 ## [21.0.2](https://github.com/worktile/ng-codemirror/compare/v21.0.1...v21.0.2) (2026-04-09)
 
 
