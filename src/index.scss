@@ -8,10 +8,13 @@
       outline: 1px solid #ccc;
     }
     .cm-selectionLayer .cm-selectionBackground{
-      background: rgba($color: #348fe4, $alpha: 0.3);
+      background: transparent;
     }
     &.cm-focused .cm-scroller .cm-selectionLayer .cm-selectionBackground{
       background: rgba($color: #348fe4, $alpha: 0.3);
+    }
+    &:not(.cm-focused) .cm-content ::selection{
+      background-color: transparent;
     }
     .cm-scroller{
       overflow-y: auto;
