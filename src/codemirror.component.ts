@@ -3,13 +3,11 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostBinding,
   Input,
   KeyValueDiffer,
   KeyValueDiffers,
   NgZone,
   OnChanges,
-  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -58,7 +56,10 @@ export type Theme = 'light' | 'dark' | 'material' | Extension;
       multi: true
     }
   ],
-  standalone: true
+  standalone: true,
+  host: {
+    class: 'ng-codemirror'
+  }
 })
 export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChanges {
   private value: string = null;
@@ -75,8 +76,6 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
 
   @ViewChild('textAreaRef', { read: ElementRef, static: true })
   textAreaRef: ElementRef;
-
-  @HostBinding('class.ng-codemirror') codemirrorClassName = true;
 
   view?: EditorView;
 
@@ -248,9 +247,6 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
 
   setReadonly(value: boolean) {
     this._dispatchEffects(this._readonlyConf.reconfigure(EditorState.readOnly.of(value)));
-    this._dispatchEffects(
-      this._readonlyConf.reconfigure(EditorView.editable.of(!value)),
-    );
   }
 
   setLanguage(lang: string | { name: string; value: string }) {
