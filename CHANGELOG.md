@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [21.0.4](https://github.com/worktile/ng-codemirror/compare/v21.0.3...v21.0.4) (2026-05-08)
+
+
+### Bug Fixes
+
+* **core:** keep codemirror focusable to ensure cm-focused is right on readonly mode #WIK-19205 ([1ca086c](https://github.com/worktile/ng-codemirror/commit/1ca086ce4f126f62cd6e9550808eac417fc6d078)), closes [#WIK-19205](https://github.com/worktile/ng-codemirror/issues/WIK-19205)
+
+
+
 ## [21.0.3](https://github.com/worktile/ng-codemirror/compare/v21.0.2...v21.0.3) (2026-04-23)
 
 
