@@ -14,5 +14,8 @@
   "include": [
     "demo/**/*.spec.ts",
     "demo/**/*.d.ts"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "strictTemplates": false
+  }
 }

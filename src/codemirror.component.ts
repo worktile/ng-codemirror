@@ -62,26 +62,26 @@ export type Theme = 'light' | 'dark' | 'material' | Extension;
   }
 })
 export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChanges {
-  private value: string = null;
+  private value: string | null = null;
   private onTouchedCallback: () => void = () => {};
   private onChangeCallback: (_: any) => void = () => {};
 
-  @Input() options: NgCodeMirrorOptions;
+  @Input() options!: NgCodeMirrorOptions;
 
   @Input() extensions: Extension[] = [];
 
-  @Input() languages: LanguageDescription[];
+  @Input() languages!: LanguageDescription[];
 
   @Output() focusChange: EventEmitter<boolean> = new EventEmitter();
 
   @ViewChild('textAreaRef', { read: ElementRef, static: true })
-  textAreaRef: ElementRef;
+  textAreaRef!: ElementRef;
 
   view?: EditorView;
 
   isDelayRender = input(false);
 
-  private _differ: KeyValueDiffer<string, any>;
+  private _differ!: KeyValueDiffer<string, any>;
 
   private _readonlyConf = new Compartment();
 
@@ -162,7 +162,7 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
       this.view = new EditorView({
         parent: this.elementRef.nativeElement,
         state: EditorState.create({
-          doc: this.value,
+          doc: this.value ?? undefined,
           extensions: this._getAllExtensions()
         })
       });
@@ -268,12 +268,9 @@ export class CodeMirrorComponent implements OnInit, ControlValueAccessor, OnChan
   }
 
   setCursor(cursorBlinkRate: number) {
-    const cursorStyle = cursorBlinkRate < 0 ? { border: '0px' } : undefined;
     this._dispatchEffects(
       this._themeConf.reconfigure(
-        EditorView.theme({
-          '.cm-cursor': cursorStyle
-        })
+        EditorView.theme(cursorBlinkRate < 0 ? { '.cm-cursor': { border: '0px' } } : {})
       )
     );
   }
