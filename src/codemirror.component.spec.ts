@@ -1,4 +1,4 @@
-import { Component, DebugElement } from "@angular/core";
+import { Component, DebugElement, ChangeDetectionStrategy } from "@angular/core";
 import { waitForAsync, ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
@@ -12,6 +12,7 @@ import { CodemirrorModule } from "./codemirror.module";
     [options]="options"
     [(ngModel)]="value"
   ></ng-codemirror>`,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 class CodemirrorBasicTestComponent {

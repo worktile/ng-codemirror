@@ -14,5 +14,8 @@
   "exclude": [
     "demo/test.ts",
     "demo/**/*.spec.ts"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "strictTemplates": false
+  }
 }

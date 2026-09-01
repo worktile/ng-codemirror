@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from "@angular/core";
 import { CodeMirrorComponent, selectableLanguages } from "ng-codemirror";
 import { CodeLanguages, CODE_BLOCK_LANGUAGES, DEFAULT_LANGUAGE } from "./constants/codemirror";
 
@@ -31,6 +31,7 @@ import { CodeLanguages, CODE_BLOCK_LANGUAGES, DEFAULT_LANGUAGE } from "./constan
     host: {
         ['class']: 'demo-codemirror'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CodeBlockComponent implements OnInit {
@@ -76,11 +77,11 @@ export class CodeBlockComponent implements OnInit {
     }
 
     @ViewChild('codemirrorComponent')
-    codemirrorComponent: CodeMirrorComponent
+    codemirrorComponent!: CodeMirrorComponent
 
     constructor(private cdr: ChangeDetectorRef) { }
 
-    toggleReadonly(checked) {
+    toggleReadonly(checked: boolean) {
         if (checked) {
             this.options = { ...this.options, readonly: true, cursorBlinkRate: -1 };
         } else {
